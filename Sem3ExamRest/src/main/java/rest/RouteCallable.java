@@ -11,26 +11,26 @@ import java.util.concurrent.Callable;
  *
  * @author adams
  */
-public class StarWarsCallable implements Callable<String> {
+public class RouteCallable implements Callable<String> {
 
-    private final int id;
+    private String url;
 
-    public StarWarsCallable(int id) {
-        this.id = id;
+    public RouteCallable(String url) {
+        this.url = url;
     }
 
     @Override
     public String call() throws InterruptedException  {
         try {
             System.out.println("starting " + Thread.currentThread().getId());
-            return getSwappiData(this.id);
+            return getRouteData();
         } catch (IOException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
 
-    public String getSwappiData(int id) throws MalformedURLException, IOException {
-        URL url = new URL("https://swapi.co/api/people/" + id);
+    public String getRouteData() throws MalformedURLException, IOException {
+        URL url = new URL(this.url);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Accept", "application/json;charset=UTF-8");

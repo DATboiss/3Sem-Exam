@@ -24,23 +24,23 @@ public class DemoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("routes/arr?={departure}+dep={destination}")
+    public String getStarWars(@PathParam("departure") String departure, @PathParam("destination") String destination) throws InterruptedException, ExecutionException {
+        try {
+            RouteFuture rf = new RouteFuture();
+            return rf.routeFetcher(departure, destination);
+        } catch (ExecutionException e) {
+            throw new InterruptedException(e.getMessage());
+        }
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("user")
     @RolesAllowed("user")
     public String getFromUser() {
         String user = securityContext.getUserPrincipal().getName();
         return "\"Hello from USER: " + user + "\"";
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("sw/{amount}")
-    public String getStarWars(@PathParam("amount") int amount) throws InterruptedException, ExecutionException {
-        try {
-            StarWarsFuture sw = new StarWarsFuture();
-            return sw.StarWarsFetcher(amount);
-        } catch (ExecutionException e) {
-            throw new InterruptedException(e.getMessage());
-        }
     }
 
     @GET

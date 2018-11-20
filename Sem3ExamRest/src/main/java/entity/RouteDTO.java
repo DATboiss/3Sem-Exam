@@ -6,7 +6,7 @@ import java.util.Date;
  *
  * @author adams
  */
-public class RouteDTO {
+public class RouteDTO implements Comparable<RouteDTO> {
 
     private final String airline;
     private final String departure;
@@ -15,13 +15,13 @@ public class RouteDTO {
     private final Date depTime;
     private final Date arrTime;
     private final String duration;
-    private final String price;
+    private final int price;
     private final String cancelInsurance;
     private final String airplane;
     private final String model;
     private final String capacity;
 
-    public RouteDTO(String airline, String departure, String destination, String gender, Date depTime, Date arrTime, String duration, String price, String cancelInsurance, String airplane, String model, String capacity) {
+    public RouteDTO(String airline, String departure, String destination, String gender, Date depTime, Date arrTime, String duration, int price, String cancelInsurance, String airplane, String model, String capacity) {
         this.airline = airline;
         this.departure = departure;
         this.destination = destination;
@@ -35,6 +35,8 @@ public class RouteDTO {
         this.model = model;
         this.capacity = capacity;
     }
+
+ 
 
     public String getAirline() {
         return airline;
@@ -64,7 +66,7 @@ public class RouteDTO {
         return duration;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -87,6 +89,11 @@ public class RouteDTO {
     @Override
     public String toString() {
         return "RouteDTO{" + "airline=" + airline + ", departure=" + departure + ", destination=" + destination + ", gender=" + gender + ", depTime=" + depTime + ", arrTime=" + arrTime + ", duration=" + duration + ", price=" + price + ", cancelInsurance=" + cancelInsurance + ", airplane=" + airplane + ", model=" + model + ", capacity=" + capacity + '}';
+    }
+
+    @Override
+    public int compareTo(RouteDTO o) {
+        return this.price - o.getPrice();
     }
 
     
