@@ -2,7 +2,6 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
@@ -35,12 +34,12 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("sw/{amount}")
-    public String getStarWars(@PathParam("amount") int amount) throws InterruptedException, ExecutionException, IOException {
+    public String getStarWars(@PathParam("amount") int amount) throws InterruptedException, ExecutionException {
         try {
             StarWarsFuture sw = new StarWarsFuture();
             return sw.StarWarsFetcher(amount);
-        } catch (InterruptedException | ExecutionException e) {
-            throw new IOException(e.getMessage());
+        } catch (ExecutionException e) {
+            throw new InterruptedException(e.getMessage());
         }
     }
 

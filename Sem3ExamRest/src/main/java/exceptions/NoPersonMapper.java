@@ -17,20 +17,23 @@ import javax.ws.rs.ext.Provider;
  * @author adams
  */
 @Provider
-public class NoPersonMapper implements ExceptionMapper<IOException> {
+public class NoPersonMapper implements ExceptionMapper<InterruptedException> {
 
     @Context
     ServletContext context;
-
+    
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
+    
     @Override
-    public Response toResponse(IOException e) {
+    public Response toResponse(InterruptedException e) {
         boolean debug = context.getInitParameter("debug").equals("true");
         ExceptionError ee = new ExceptionError(e, 404, debug);
-        ee.setDescription("Tried to fetch person a person, with an id that was out of range. Max id value should be 87.");
+        ee.setDescription("Tried to fetch person a person, with an id that was out of range. Max id value should be 88.");
         ee.setMessage("A problem occured with the server.");
         return Response.status(404).entity(GSON.toJson(ee)).type(MediaType.APPLICATION_JSON).build();
     }
 
+    
+    
+    
 }

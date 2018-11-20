@@ -20,12 +20,12 @@ public class StarWarsCallable implements Callable<String> {
     }
 
     @Override
-    public String call() throws IOException  {
+    public String call() throws InterruptedException  {
         try {
             System.out.println("starting " + Thread.currentThread().getId());
             return getSwappiData(this.id);
         } catch (IOException e) {
-            throw new IOException(e.getMessage());
+            throw new InterruptedException(e.getMessage());
         }
     }
 
