@@ -2,8 +2,8 @@ import React from 'react'
 
 export default class settings extends React.Component  {
 
-    getApiURL(amount) {
-        return "http://localhost:8080/swapi/api/info/sw/" + amount;
+    getAllFlights() {
+        return "http://e99c53fa.ngrok.io/api/flights";
     }
     getLoginURL() {
         return "http://localhost:8080/swapi/api/login/"

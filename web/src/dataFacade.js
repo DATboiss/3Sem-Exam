@@ -20,8 +20,8 @@ class DataFacade {
   // }
 
   // In order to use await, a method must be "marked" with async
-  async getPersons(amount) {
-    return await fetch(URL.getApiURL(amount)).then(handleHttpErrors)
+  async getFlights() {
+    return await fetch(URL.getAllFlights()).then(handleHttpErrors)
   }
 
   setTokenAndRole = (token, roles) => {
@@ -45,7 +45,6 @@ class DataFacade {
     return await fetch(URL.getLoginURL(), options, true)
       .then(handleHttpErrors)
       .then(res => {
-        console.log(res)
         this.setTokenAndRole(res.token, res.roles)
       })
   }
