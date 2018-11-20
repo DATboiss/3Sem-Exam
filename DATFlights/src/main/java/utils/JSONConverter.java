@@ -24,7 +24,7 @@ public class JSONConverter
         return gson.toJson(f);
     }
 
-    public static String getJSONFromPets(List<Flight> flights)
+    public static String getJSONFromFlights(List<Flight> flights)
     {
         return gson.toJson(flights);
     }

@@ -5,6 +5,7 @@
  */
 package rest;
 
+import facade.FacadeFlight;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -13,6 +14,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import utils.JSONConverter;
 
 /**
  * REST Web Service
@@ -22,6 +25,7 @@ import javax.ws.rs.core.MediaType;
 @Path("flights")
 public class Flights {
 
+    FacadeFlight fp = new FacadeFlight();
     @Context
     private UriInfo context;
 
@@ -37,31 +41,10 @@ public class Flights {
      * @return an instance of java.lang.String
      */
     @GET
-    @Path("{test}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getFlight() {
-        return "{"
-                + "“airline”:”British Airways”,"
-                + "“departure”:”CPH”,"
-                + "“destination”:”LHR”,"
-                + "”depTime”:”YYYY-MM-DD-HH-MM”,"
-                + "”arrTime”:”YYYY-MM-DD-HH-MM”,"
-                + "”duration”: “125”,"
-                + "”price”: “1019”,"
-                + "“cancelInsurance”: “200”,"
-                + "”airplane”: ”BA811”,"
-                + "“model”: ”Airbus A321”,"
-                + "”capacity”: “236”"
-                + "}";
+    public Response getFlights() {
+        String json = JSONConverter.getJSONFromFlights(fp.getFlights());
+        return Response.status(Response.Status.ACCEPTED).entity(json).build();
     }
 
-    /**
-     * PUT method for updating or creating an instance of Flights
-     *
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
 }

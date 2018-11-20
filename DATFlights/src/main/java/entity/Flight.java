@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -21,7 +22,9 @@ public class Flight implements Serializable {
     private String airline;
     private String departure;
     private String destination;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date depTime;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date arrTime;
     private int duration;
     private int price;
@@ -37,8 +40,7 @@ public class Flight implements Serializable {
     public Flight() {
     }
 
-    public Flight(Integer id, String airline, String departure, String destination, Date depTime, Date arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity) {
-        this.id = id;
+    public Flight(String airline, String departure, String destination, Date depTime, Date arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity) {
         this.airline = airline;
         this.departure = departure;
         this.destination = destination;
