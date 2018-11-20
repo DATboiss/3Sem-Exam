@@ -2,7 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import entity.StarWarsDTO;
+import entity.RouteDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +18,7 @@ import java.util.concurrent.Future;
 public class StarWarsFuture {
 
     private List<Future<String>> starWarsFutures = new ArrayList();
-    private List<StarWarsDTO> personList = new ArrayList();
+    private List<RouteDTO> personList = new ArrayList();
     private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public String StarWarsFetcher(int amount) throws InterruptedException, ExecutionException {
@@ -39,7 +39,7 @@ public class StarWarsFuture {
             }
 
             for (Future<String> future : starWarsFutures) {
-                personList.add(GSON.fromJson(future.get(), StarWarsDTO.class));
+                personList.add(GSON.fromJson(future.get(), RouteDTO.class));
             }
             return GSON.toJson(personList);
         } catch (InterruptedException e) {
