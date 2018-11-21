@@ -36,9 +36,9 @@ public class RouteCallable implements Callable<String> {
         con.setRequestProperty("Accept", "application/json;charset=UTF-8");
         con.setRequestProperty("User-Agent", "server");
         Scanner scan = new Scanner(con.getInputStream());
-        String jsonStr = null;
-        if (scan.hasNext()) {
-            jsonStr = scan.nextLine();
+        String jsonStr = "";
+        while (scan.hasNext()) {
+            jsonStr += scan.nextLine();
         }
         scan.close();
         return jsonStr;

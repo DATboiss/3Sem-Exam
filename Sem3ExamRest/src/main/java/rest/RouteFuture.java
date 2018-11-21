@@ -26,50 +26,50 @@ public class RouteFuture {
     private final String url1 = "https://e7972226.ngrok.io/api/flights";
     private final String url2 = "https://e7972226.ngrok.io/api/flights";
     private final String url3 = "https://e7972226.ngrok.io/api/flights";
-    
+
     public String routeFetcher(String departure, String destination) throws InterruptedException, ExecutionException {
         try {
 
             ExecutorService executor = Executors.newFixedThreadPool(3);
-            
-            RouteCallable callable = new RouteCallable(url1);
-            Future<String> future1 = executor.submit(callable);
+
+            RouteCallable callable1 = new RouteCallable(url1);
+            Future<String> future1 = executor.submit(callable1);
 //            Future<String> future1 = executor.submit(()->{});
-            if (Objects.nonNull(future1)) {
-                routeFutures.add(future1);
+//            if (Objects.nonNull(future1)) {
+//                routeFutures.add(future1);
+//            }
+//            System.out.println(" Future1.get = " + future1.get());
+            RouteDTO[] routes1 = GSON.fromJson(future1.get(), RouteDTO[].class);
+            for (RouteDTO route : routes1) {
+//                System.out.println(route.toString());
+                routeList.add(route);
             }
 
-            for (Future<String> future2 : routeFutures) {
-                routeList.add(GSON.fromJson(future2.get(), RouteDTO.class));
+            RouteCallable callable2 = new RouteCallable(url2);
+            Future<String> future2 = executor.submit(callable2);
+            RouteDTO[] routes2 = GSON.fromJson(future2.get(), RouteDTO[].class);
+            for (RouteDTO route : routes2) {
+//                System.out.println(route.toString());
+                routeList.add(route);
             }
             
-            callable = new RouteCallable(url2);
-            future1 = executor.submit(callable);
-            if (Objects.nonNull(future1)) {
-                routeFutures.add(future1);
+            RouteCallable callable3 = new RouteCallable(url3);
+            Future<String> future3 = executor.submit(callable3);
+            RouteDTO[] routes3 = GSON.fromJson(future3.get(), RouteDTO[].class);
+            for (RouteDTO route : routes3) {
+//                System.out.println(route.toString());
+                routeList.add(route);
             }
             
-            for (Future<String> future2 : routeFutures) {
-                routeList.add(GSON.fromJson(future2.get(), RouteDTO.class));
-            }
-            
-            callable = new RouteCallable(url3);
-            future1 = executor.submit(callable);
-            if (Objects.nonNull(future1)) {
-                routeFutures.add(future1);
-            }
-
-            for (Future<String> future2 : routeFutures) {
-                routeList.add(GSON.fromJson(future2.get(), RouteDTO.class));
-            }
+//          
             executor.shutdown();
-            
+
             List<RouteDTO> filteredRouteList = routeList.stream()
-                                .filter(route -> route.getDeparture().equals(departure) && route.getDestination().equals(destination))
-                                .collect(Collectors.toList());
-            
+                    .filter(route -> route.getDeparture().equals(departure) && route.getDestination().equals(destination))
+                    .collect(Collectors.toList());
+
             Collections.sort(filteredRouteList);
-            
+
             return GSON.toJson(filteredRouteList);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());

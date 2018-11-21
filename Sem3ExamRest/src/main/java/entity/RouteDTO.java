@@ -12,16 +12,16 @@ public class RouteDTO implements Comparable<RouteDTO> {
     private final String departure;
     private final String destination;
     private final String gender;
-    private final Date depTime;
-    private final Date arrTime;
-    private final String duration;
+    private final String depTime;
+    private final String arrTime;
+    private final int duration;
     private final int price;
-    private final String cancelInsurance;
+    private final int cancelInsurance;
     private final String airplane;
     private final String model;
     private final String capacity;
 
-    public RouteDTO(String airline, String departure, String destination, String gender, Date depTime, Date arrTime, String duration, int price, String cancelInsurance, String airplane, String model, String capacity) {
+    public RouteDTO(String airline, String departure, String destination, String gender, String depTime, String arrTime, int duration, int price, int cancelInsurance, String airplane, String model, String capacity) {
         this.airline = airline;
         this.departure = departure;
         this.destination = destination;
@@ -35,6 +35,8 @@ public class RouteDTO implements Comparable<RouteDTO> {
         this.model = model;
         this.capacity = capacity;
     }
+
+    
 
  
 
@@ -54,15 +56,15 @@ public class RouteDTO implements Comparable<RouteDTO> {
         return gender;
     }
 
-    public Date getDepTime() {
+    public String getDepTime() {
         return depTime;
     }
 
-    public Date getArrTime() {
+    public String getArrTime() {
         return arrTime;
     }
 
-    public String getDuration() {
+    public int getDuration() {
         return duration;
     }
 
@@ -70,7 +72,7 @@ public class RouteDTO implements Comparable<RouteDTO> {
         return price;
     }
 
-    public String getCancelInsurance() {
+    public int getCancelInsurance() {
         return cancelInsurance;
     }
 

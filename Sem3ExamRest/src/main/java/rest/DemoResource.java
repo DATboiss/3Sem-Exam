@@ -24,8 +24,9 @@ public class DemoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("arr?={departure}+dep={destination}")
-    public String getStarWars(@PathParam("departure") String departure, @PathParam("destination") String destination) throws InterruptedException, ExecutionException {
+    @Path("dep={departure}&des={destination}")
+    public String getRoutes(@PathParam("departure") String departure, @PathParam("destination") String destination) throws InterruptedException, ExecutionException {
+        System.out.println("Hello Before try");
         try {
             RouteFuture rf = new RouteFuture();
             return rf.routeFetcher(departure, destination);
