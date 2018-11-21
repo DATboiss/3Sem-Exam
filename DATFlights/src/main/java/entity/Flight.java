@@ -22,10 +22,8 @@ public class Flight implements Serializable {
     private String airline;
     private String departure;
     private String destination;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date depTime;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date arrTime;
+    private String depTime;
+    private String arrTime;
     private int duration;
     private int price;
     private int cancelInsurance;
@@ -40,7 +38,7 @@ public class Flight implements Serializable {
     public Flight() {
     }
 
-    public Flight(String airline, String departure, String destination, Date depTime, Date arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity) {
+    public Flight(String airline, String departure, String destination, String depTime, String arrTime, int duration, int price, int cancelInsurance, String airplane, String model, int capacity) {
         this.airline = airline;
         this.departure = departure;
         this.destination = destination;
@@ -78,19 +76,19 @@ public class Flight implements Serializable {
         this.destination = destination;
     }
 
-    public Date getDepTime() {
+    public String getDepTime() {
         return depTime;
     }
 
-    public void setDepTime(Date depTime) {
+    public void setDepTime(String depTime) {
         this.depTime = depTime;
     }
 
-    public Date getArrTime() {
+    public String getArrTime() {
         return arrTime;
     }
 
-    public void setArrTime(Date arrTime) {
+    public void setArrTime(String arrTime) {
         this.arrTime = arrTime;
     }
 

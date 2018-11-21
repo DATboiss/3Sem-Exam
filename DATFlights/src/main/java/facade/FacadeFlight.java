@@ -1,6 +1,7 @@
 package facade;
 
 import entity.Flight;
+import entity.FlightDTO;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -23,13 +24,13 @@ public class FacadeFlight {
         return emf.createEntityManager();
     }
 
-    public List<Flight> getFlights() {
+    public List<FlightDTO> getFlights() {
         EntityManager em = emf.createEntityManager();
 
-        List<Flight> flights = null;
+        List<FlightDTO> flights = null;
         try {
             em.getTransaction().begin();
-            flights = em.createQuery("Select f FROM Flight f", Flight.class).getResultList();
+            flights = em.createQuery("Select new entity.FlightDTO(f) from Flight f", FlightDTO.class).getResultList();
             em.getTransaction().commit(); 
             return flights;
         } finally {

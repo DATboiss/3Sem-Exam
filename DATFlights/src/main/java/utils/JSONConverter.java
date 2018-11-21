@@ -3,6 +3,7 @@ package utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.Flight;
+import entity.FlightDTO;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class JSONConverter
         return gson.toJson(f);
     }
 
-    public static String getJSONFromFlights(List<Flight> flights)
+    public static String getJSONFromFlights(List<FlightDTO> flights)
     {
         return gson.toJson(flights);
     }
