@@ -23,9 +23,9 @@ public class RouteFuture {
     private List<Future<String>> routeFutures = new ArrayList();
     private List<RouteDTO> routeList = new ArrayList();
     private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private final String url1 = "";
-    private final String url2 = "";
-    private final String url3 = "";
+    private final String url1 = "https://e7972226.ngrok.io/api/flights";
+    private final String url2 = "https://e7972226.ngrok.io/api/flights";
+    private final String url3 = "https://e7972226.ngrok.io/api/flights";
     
     public String routeFetcher(String departure, String destination) throws InterruptedException, ExecutionException {
         try {
@@ -47,6 +47,10 @@ public class RouteFuture {
             future1 = executor.submit(callable);
             if (Objects.nonNull(future1)) {
                 routeFutures.add(future1);
+            }
+            
+            for (Future<String> future2 : routeFutures) {
+                routeList.add(GSON.fromJson(future2.get(), RouteDTO.class));
             }
             
             callable = new RouteCallable(url3);

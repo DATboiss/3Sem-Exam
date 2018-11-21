@@ -13,7 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
-@Path("info")
+@Path("routes")
 public class DemoResource {
 
     @Context
@@ -24,7 +24,7 @@ public class DemoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("routes/arr?={departure}+dep={destination}")
+    @Path("arr?={departure}+dep={destination}")
     public String getStarWars(@PathParam("departure") String departure, @PathParam("destination") String destination) throws InterruptedException, ExecutionException {
         try {
             RouteFuture rf = new RouteFuture();
