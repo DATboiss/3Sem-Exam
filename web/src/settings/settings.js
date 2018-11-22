@@ -3,7 +3,7 @@ import React from 'react'
 export default class settings extends React.Component  {
 
     getAllFlights() {
-        return "http://e99c53fa.ngrok.io/api/flights";
+        return "https://emilvh.dk/DATFlights/api/flights";
     }
     getLoginURL() {
         return "http://localhost:8080/swapi/api/login/"

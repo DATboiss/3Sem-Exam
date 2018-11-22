@@ -17,8 +17,12 @@ class App extends Component {
 
   onDataChanged = (e) => {
     if (e)
-    this.setState({[e.target.name]: e.target.value})
+      this.setState({ [e.target.name]: e.target.value })
   }
+  removeArrivalDate = () => {
+    this.setState({dateArrival: undefined});
+}
+
 
   render() {
     return (
@@ -26,14 +30,10 @@ class App extends Component {
         <div>
           <Header />
           {/* <SearchParameters /> */}
-          {/* <SortContainer /> */}
           {/* <ResultContainer /> */}
           {/* <AdContainer /> */}
           <Route exact path="/" render={() => <Home state={this.state} onDataChanged={this.onDataChanged} />} />
-          <Route path="/results" render={() => <Results />} />
-          {/* <Route path="/persons" component={Persons} />
-        <Route path="/bigdata" component={BigData} />
-        <Route path="/login" component={LoginApp} /> */}
+          <Route path="/results" render={() => <Results state={this.state} onDataChanged={this.onDataChanged} removeArrivalDate={this.removeArrivalDate} />} />
         </div>
       </Router>
     )
@@ -47,7 +47,7 @@ const Home = (props) => {
         <h2>DatFlights</h2>
       </div>
       <div>
-        <SearchParameters state={props.state} onDataChanged={props.onDataChanged}/>
+        <SearchParameters state={props.state} onDataChanged={props.onDataChanged} />
       </div>
     </div>
   );
