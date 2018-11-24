@@ -2,11 +2,11 @@ import React from 'react'
 
 export default class settings extends React.Component  {
 
-    getAllFlights() {
-        return "https://emilvh.dk/DATFlights/api/flights";
+    getOneWay(departure, destination, date) {
+        return `https://sebastianlundsgaard.dk/ExamSem3Rest/api/flights/oneway?departure=${departure}&destination=${destination}&date1=${date}`;
     }
-    getLoginURL() {
-        return "http://localhost:8080/swapi/api/login/"
+    getReturnTrip(departure, destination, deptDate, returnDate) {
+        return `https://sebastianlundsgaard.dk/ExamSem3Rest/api/flights/return?departure=${departure}&destination=${destination}&date1=${deptDate}&date2=${returnDate}`
     }
     getUserURL() {
         return "http://localhost:8080/swapi/api/info/user/"

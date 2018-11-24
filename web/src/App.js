@@ -4,7 +4,7 @@ import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
 import 'react-input-range/lib/css/index.css';
 import './App.css';
 import SearchParameters from './components/SearchParameters'
-import Results from './components/ResultContainer'
+import Results from './components/Result'
 // import BigData from "./components/ClientSidePagination.js";
 // import Persons from "./components/Persons";
 
@@ -12,7 +12,7 @@ import Results from './components/ResultContainer'
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {tripType: "returntrip"}
   }
 
   onDataChanged = (e) => {
@@ -20,8 +20,16 @@ class App extends Component {
       this.setState({ [e.target.name]: e.target.value })
   }
   removeArrivalDate = () => {
-    this.setState({dateArrival: undefined});
-}
+    this.setState({ dateArrival: undefined });
+  }
+  
+  setTripType = (e) => {
+    if (e.target.id === "oneway") {
+      this.removeArrivalDate();
+    }
+    this.setState({ tripType: e.target.id })
+  }
+
 
 
   render() {
@@ -32,8 +40,7 @@ class App extends Component {
           {/* <SearchParameters /> */}
           {/* <ResultContainer /> */}
           {/* <AdContainer /> */}
-          <Route exact path="/" render={() => <Home state={this.state} onDataChanged={this.onDataChanged} />} />
-          <Route path="/results" render={() => <Results state={this.state} onDataChanged={this.onDataChanged} removeArrivalDate={this.removeArrivalDate} />} />
+          <Route exact path="/" render={() => <Home state={this.state} onDataChanged={this.onDataChanged} removeArrivalDate={this.removeArrivalDate} setTripType={this.setTripType} />} />
         </div>
       </Router>
     )
@@ -47,7 +54,7 @@ const Home = (props) => {
         <h2>DatFlights</h2>
       </div>
       <div>
-        <SearchParameters state={props.state} onDataChanged={props.onDataChanged} />
+        <SearchParameters state={props.state} onDataChanged={props.onDataChanged} removeArrivalDate={props.removeArrivalDate} setTripType={props.setTripType}/>
       </div>
     </div>
   );

@@ -1,8 +1,11 @@
 import React from 'react';
 
-
 export default function OrderParameters(props) {
     return (
-        <button onClick={props.setOrder}>Price</button>
+        <div>
+            <button name="price" onClick={props.compareBy}>Price</button>
+            <button name="duration" onClick={props.compareBy}>Duration</button>
+        </div>
+
     )
 }

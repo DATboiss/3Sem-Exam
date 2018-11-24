@@ -20,8 +20,12 @@ class DataFacade {
   // }
 
   // In order to use await, a method must be "marked" with async
-  async getFlights() {
-    return await fetch(URL.getAllFlights()).then(handleHttpErrors)
+  async getOneWayRoutes(departure, destination, date) {
+    return await fetch(URL.getOneWay(departure, destination, date)).then(handleHttpErrors)
+  }
+  async getReturnRoutes(departure, destination, deptDate, returnDate) {
+    console.log(URL.getReturnTrip(departure, destination, deptDate, returnDate))
+    return await fetch(URL.getReturnTrip(departure, destination, deptDate, returnDate)).then(handleHttpErrors)
   }
 
   setTokenAndRole = (token, roles) => {
