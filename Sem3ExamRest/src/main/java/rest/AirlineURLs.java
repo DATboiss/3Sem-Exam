@@ -17,10 +17,11 @@ public class AirlineURLs
 
     public static List<String> getAirlineURLs()
     {
-
+        if (airlineURLs.isEmpty()) {
         airlineURLs.add(url1);
         airlineURLs.add(url2);
         airlineURLs.add(url3);
+        }
         return airlineURLs;
     }
 
