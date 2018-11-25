@@ -17,7 +17,7 @@ export default class Filter extends Component {
                 </form> :
                 <form onChange={this.props.onDataChanged} onMouseUp={this.props.filterList} step="50" >
                     <p>Price: </p>
-                    <input name="price" type="range" min="100" max="3000" />
+                    <input name="price" type="range" min="100" max="3000" step="50" />
                     <p>{JSON.stringify(this.props.state.price)}</p>
                 </form>
         )

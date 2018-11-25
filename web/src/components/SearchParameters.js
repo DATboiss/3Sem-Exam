@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Result from './Result'
 import dataFacade from '../dataFacade'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 
 export default class SearchParameter extends Component {
     constructor(props) {
         super(props);
-        this.state = { tripType: "returntrip", loading: true };
+        this.state = { tripType: "returntrip", resultsMounted: true, searched: false };
     }
 
     setTripType = (e) => {
@@ -18,15 +19,15 @@ export default class SearchParameter extends Component {
 
     fetchFlights = async (e) => {
         e.preventDefault();
-        this.setState({ loading: true })
+        this.setState({ resultsMounted: true, searched: true })
         const { departureLoc, arrivalLoc, dateDeparture, dateReturn } = this.props.state;
         if (this.props.state.tripType === "returntrip") {
             const flights = await dataFacade.getReturnRoutes(departureLoc, arrivalLoc, dateDeparture, dateReturn)
-            this.setState({ flights: flights, loading: false })
+            this.setState({ flights: flights, resultsMounted: false, searched: false })
         }
         else {
             const flights = await dataFacade.getOneWayRoutes(departureLoc, arrivalLoc, dateDeparture)
-            this.setState({ flights: flights, loading: false })
+            this.setState({ flights: flights, resultsMounted: false, searched: false })
         }
     }
 
@@ -62,7 +63,10 @@ export default class SearchParameter extends Component {
                     {(this.props.state.tripType === "returntrip") ? this.returnTrip() : this.oneWayTrip()}
                 </div>
                 <div>
-                    {(this.state.loading) ? "" : <Result state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.props.tripType} />}
+
+                    {
+                        (this.state.resultsMounted) ? (this.state.searched) ? <BeatLoader /> : "" : <Result state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.props.tripType} />
+                    }
                 </div>
             </>
         )
