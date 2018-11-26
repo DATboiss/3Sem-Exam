@@ -2,10 +2,12 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
@@ -13,22 +15,35 @@ import javax.persistence.Temporal;
  * @author adams
  */
 @Entity
+@Table(name = "flight")
 public class Flight implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+    @Column(name = "airline")
     private String airline;
+    @Column(name = "departure")
     private String departure;
+    @Column(name = "destination")
     private String destination;
+    @Column(name = "dep_time")
     private String depTime;
+    @Column(name = "arr_time")
     private String arrTime;
+    @Column(name = "duration")
     private int duration;
+    @Column(name = "price")
     private int price;
+    @Column(name = "cancel_insurance")
     private int cancelInsurance;
+    @Column(name = "airplane")
     private String airplane;
+    @Column(name = "model")
     private String model;
+    @Column(name = "capacity")
     private int capacity;
 
     public Integer getId() {

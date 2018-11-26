@@ -6,6 +6,7 @@
 package rest;
 
 import facade.FacadeFlight;
+import java.text.ParseException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -16,6 +17,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import utils.JSONConverter;
+import utils.SchemaBuilder;
 
 /**
  * REST Web Service
@@ -46,5 +48,18 @@ public class Flights {
         String json = JSONConverter.getJSONFromFlights(fp.getFlights());
         return Response.status(Response.Status.ACCEPTED).entity(json).build();
     }
-
+    
+    @GET
+    @Path("test")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response test() {
+        return Response.status(Response.Status.ACCEPTED).entity("Hej det virker").build();
+    }
+    @GET
+    @Path("create")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createSchema() throws ParseException {
+        SchemaBuilder.createSchema();
+        return Response.status(Response.Status.ACCEPTED).entity("Hej det virker").build();
+    }
 }
