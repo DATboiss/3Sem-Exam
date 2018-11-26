@@ -32,6 +32,7 @@ public class ReturnDTO implements Comparable<ReturnDTO>
     private final String model2;
     private final String capacity2;
     private final int totalPrice;
+    private final int totalDuration;
 
     public ReturnDTO(String airline1, String departure1, String destination1, String depTime1, String arrTime1, int duration1, int price1, int cancelInsurance1, String airplane1, String model1, String capacity1, String airline2, String departure2, String destination2, String depTime2, String arrTime2, int duration2, int price2, int cancelInsurance2, String airplane2, String model2, String capacity2)
     {
@@ -58,6 +59,7 @@ public class ReturnDTO implements Comparable<ReturnDTO>
         this.model2 = model2;
         this.capacity2 = capacity2;
         this.totalPrice = price1 + price2;
+        this.totalDuration = duration1 + duration2;
     }
 
     public ReturnDTO(OneWayDTO o1, OneWayDTO o2)
@@ -85,6 +87,7 @@ public class ReturnDTO implements Comparable<ReturnDTO>
         this.model2 = o2.getModel();
         this.capacity2 = o2.getCapacity();
         this.totalPrice = o1.getPrice() + o2.getPrice();
+        this.totalDuration = o1.getDuration()+ o2.getDuration();
     }
 
     
@@ -199,6 +202,16 @@ public class ReturnDTO implements Comparable<ReturnDTO>
         return capacity2;
     }
 
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public int getTotalDuration() {
+        return totalDuration;
+    }
+    
+    
+    
     @Override
     public String toString()
     {
