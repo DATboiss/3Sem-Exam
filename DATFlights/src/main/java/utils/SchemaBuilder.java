@@ -22,7 +22,7 @@ public class SchemaBuilder {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ParseException {
+    public static void createSchema() throws ParseException {
         Persistence.generateSchema("pu", null);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
@@ -109,5 +109,7 @@ public class SchemaBuilder {
         }
 
     }
+    
+    
 
 }
