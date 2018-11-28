@@ -7,6 +7,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import exceptions.AuthenticationException;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,10 +29,24 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
-            user = em.find(User.class, username);
-            if (user == null || !user.verifyPassword(password)) { //verify hash & salt
+            user = em.createQuery("SELECT u FROM User u where u.userName = :username", User.class).setParameter("username", username).getSingleResult();
+            if (user == null || !user.verifyPassword(password)) { 
                 throw new AuthenticationException("Invalid user name or password");
             }
+        } finally {
+            em.close();
+        }
+        return user;
+    }
+    
+    public User createNewUser(User user) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Role userRole = new Role("user");
+            em.getTransaction().begin();
+            user.addRole(userRole);
+            em.merge(user);
+            em.getTransaction().commit();
         } finally {
             em.close();
         }

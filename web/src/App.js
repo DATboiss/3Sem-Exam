@@ -4,14 +4,16 @@ import 'react-input-range/lib/css/index.css';
 import './App.css';
 import SearchParameters from './components/SearchParameters'
 import LoginApp from './components/Login'
+import Register from './components/Register'
 import facade from "./dataFacade";
+
 
 
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { loggedIn: false, tripType: "returntrip" }
+    this.state = { loggedIn: false, tripType: "returntrip", account: {} }
   }
 
   onDataChanged = (e) => {
@@ -29,6 +31,15 @@ class App extends Component {
     this.setState({ tripType: e.target.id })
   }
 
+  onChangeRegister = (e) => {
+    const acc = this.state.account;
+    acc[e.target.name] = e.target.value;
+    this.setState({
+      account: acc
+    })
+  }
+
+
   logout = () => {
     facade.logout();
     this.setState({ loggedIn: false });
@@ -38,11 +49,10 @@ class App extends Component {
     this.setState({ user, errorMsg: "" })
     await facade.login(user, pass)
       .then(res => {
-        console.log("res:: " + res)
-        this.setState({ loggedIn: true })
+        this.setState({ loggedIn: true, username: [user] })
       })
       .catch(e => {
-        e.fullError.then(e => this.setState({errorMsg: e.errorMessage}))
+        e.fullError.then(e => this.setState({ errorMsg: e.errorMessage }))
       })
   }
 
@@ -59,6 +69,7 @@ class App extends Component {
           <Route exact path="/" render={() => <Home state={this.state} onDataChanged={this.onDataChanged} removeArrivalDate={this.removeReturnDate} setTripType={this.setTripType} tripType={this.state.tripType} />} />
           <Route path="/login" render={() => <LoginApp state={this.state} loggedIn={this.state.loggedIn} login={this.login} logout={this.logout} user={this.state.user} onDataChanged={this.onDataChanged} />} />
           <Route path="/logout" render={() => <Logout logout={this.logout} />} />
+          <Route path="/register" render={() => <Register onChangeRegister={this.onChangeRegister} account={this.state.account} login={this.login} />} />
         </div>
       </Router>
     )
@@ -90,7 +101,7 @@ const Header = (props) => (
       <NavLink to="/login">{(props.loggedIn) ? props.username : "Login"}</NavLink>
       {(props.loggedIn) ? <NavLink to="/logout" onClick={props.logout}>Log out</NavLink> : ""}
     </li>
-
+    {(props.loggedIn) ? "" : <li><NavLink to="/register">Register</NavLink></li>}
   </ul>
 )
 

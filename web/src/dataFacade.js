@@ -40,7 +40,6 @@ class DataFacade {
   }
   logout = () => {
     localStorage.removeItem("jwtToken");
-    sessionStorage.removeItem('roles');
   }
 
   login = async (user, pass) => {
@@ -48,7 +47,14 @@ class DataFacade {
     return await fetch(URL.getLoginURL(), options, true)
       .then(handleHttpErrors)
       .then(res => {
-        this.setTokenAndRole(res.token, res.roles)
+        this.setTokenAndRole(res.token)
+      })
+  }
+  registerAccount = async (body) => {
+    const options = this.makeOptions("POST", false, body);
+    return await fetch(URL.getRegisterURL(), options, true)
+      .then(handleHttpErrors)
+      .then(res => {
       })
   }
 

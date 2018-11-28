@@ -17,7 +17,7 @@ export default class settings extends React.Component  {
     getLoginURL() {
         return "http://localhost:8080/api/login"
     }
-    getAllPersonsURL(){
-        return "http://localhost:8080/api/info/sw/87"
+    getRegisterURL(){
+        return "http://localhost:8080/api/register"
     }
 }

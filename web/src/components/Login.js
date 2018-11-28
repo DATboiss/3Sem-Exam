@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import facade from "../dataFacade";
+import { HashRouter as Router, Route, NavLink, Redirect } from 'react-router-dom';
+
 
 class LogIn extends Component {
   constructor(props) {
