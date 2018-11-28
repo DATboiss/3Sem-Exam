@@ -52,7 +52,11 @@ class App extends Component {
         this.setState({ loggedIn: true, username: [user] })
       })
       .catch(e => {
-        e.fullError.then(e => this.setState({ errorMsg: e.errorMessage }))
+        if (e.fullError)
+          e.fullError.then(e => this.setState({ errorMsg: e.errorMessage }))
+          else{
+            this.setState({errorMsg: "Something went wrong with the server"})
+          }
       })
   }
 
@@ -67,7 +71,7 @@ class App extends Component {
           {/* <ResultContainer /> */}
           {/* <AdContainer /> */}
           <Route exact path="/" render={() => <Home state={this.state} onDataChanged={this.onDataChanged} removeArrivalDate={this.removeReturnDate} setTripType={this.setTripType} tripType={this.state.tripType} />} />
-          <Route path="/login" render={() => <LoginApp state={this.state} loggedIn={this.state.loggedIn} login={this.login} logout={this.logout} user={this.state.user} onDataChanged={this.onDataChanged} />} />
+          <Route path="/login" render={() => <LoginApp state={this.state} loggedIn={this.state.loggedIn} login={this.login} logout={this.logout} user={this.state.user} onDataChanged={this.onDataChanged} errorMsg={this.state.errorMsg}/>} />
           <Route path="/logout" render={() => <Logout logout={this.logout} />} />
           <Route path="/register" render={() => <Register onChangeRegister={this.onChangeRegister} account={this.state.account} login={this.login} />} />
         </div>

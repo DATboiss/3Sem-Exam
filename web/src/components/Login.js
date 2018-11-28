@@ -37,7 +37,13 @@ class LoggedIn extends Component {
     const base64 = base64URL.replace('-', '+').replace('_', '/');
     const payload = JSON.parse(window.atob(base64));
     if (payload.roles.includes('admin'))
-      facade.fetchDataAdmin().then(res => this.setState({ dataFromServer: res }));
+      facade.fetchDataAdmin().then(res => this.setState({ dataFromServer: res }))
+      .catch(e => {
+        if(e.fullError)
+          e.fullError.then(e => this.setState({errorMsg: e.errorMessage}))
+          else 
+          this.setState({errorMsg: "Something went wrong with the server"})
+      });
     else if (payload.roles.includes('user'))
       facade.fetchDataUser().then(res => this.setState({ dataFromServer: res }));
 
@@ -46,7 +52,7 @@ class LoggedIn extends Component {
     return (
       <div>
         <h2>Data Received from server</h2>
-        <h3>{this.state.dataFromServer}</h3>
+        {(!this.state.errorMsg)?<h3>{this.state.dataFromServer}</h3>:<h3 style={({color:"red"})}>{this.state.errorMsg}</h3>}
       </div>
     )
   }
@@ -63,7 +69,7 @@ class LoginApp extends Component {
       <div>
         {!this.props.state.loggedIn ? (<LogIn login={this.props.login} onDataChanged={this.props.onDataChanged} state={this.props.state} />) :
           (<div>
-            <LoggedIn user={this.props.state.user} />
+            <LoggedIn user={this.props.state.user} errorMsg={this.props.errorMsg} />
             <button onClick={this.props.logout}>Logout</button>
           </div>)}
       </div>

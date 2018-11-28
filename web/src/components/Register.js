@@ -19,13 +19,17 @@ export default class Register extends Component {
         })
         if (this.props.account.userPass === this.props.account.userPass2) {
             await dataFacade.registerAccount(this.props.account)
-                .catch(e =>
-                    e.fullError.then(e => this.setState({ errorMsg: e.errorMessage }))
-                )
-                if(!this.state.errorMsg){
-                    await this.props.login(this.props.account.userName, this.props.account.userPass)
-                    this.setState({registered: true})
+                .catch(e => {
+                    if (e.fullError)
+                        e.fullError.then(e => this.setState({ errorMsg: e.errorMessage }))
+                    else
+                        this.setState({ errorMsg: "Something went wrong with the server" })
                 }
+                )
+            if (!this.state.errorMsg) {
+                await this.props.login(this.props.account.userName, this.props.account.userPass)
+                this.setState({ registered: true })
+            }
         } else {
             this.setState({
                 errorMsg: "Passwords aren't matching"
