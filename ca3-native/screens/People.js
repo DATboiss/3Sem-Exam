@@ -1,64 +1,69 @@
 import React, { Component } from 'react';
-import { View, Text, Picker, StyleSheet, FlatList } from 'react-native';
-import datafacade from "../DataFacade";
+import { View, Text, StyleSheet, Slider } from 'react-native';
+import { FloatingAction } from 'react-native-floating-action';
+// import { Slider } from 'react-native-elements'
+
+
 
 export default class People extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount: '',
-      persons: [],
+      data: [],
+      price: 100,
+      slider: false
     }
   }
+
+  //the slider
+  SliderView = () => {
+    if (this.state.slider) {
+      return <Slider
+        style={styles.slider}
+        value={this.state.price}
+        onValueChange={(price) => this.setState({ price })} 
+        maximumValue= {100}
+        minimumValue= {0} 
+        // the number to increment with for each slide
+        step= { 1 } />
+    }
+    return <Text>fff</Text>;
+  }
+
 
   async componentDidMount() {
-    //default amount to show is 5
-    this.fetchData(5);
 
   }
 
-  //use this in render to fetch each time the DOM changes
-  async fetchData(i){
-    try {
-      const people = await datafacade.getPersons(i);
-      this.setState({
-        persons: people,
-        //update amount state to the amount from picker
-        amount: i
-      });
-    } catch (err) {
-      alert("error: " + err.status)
-    }
-  }
   render() {
-    return (
-      <View style={{ color: "black", backgroundColor: "black", flex: 1, alignItems: 'center' }}>
-        <Text style={styles.title}>
-          How many people do you want to fetch from the database?
-          Showing: {this.state.amount}
-        </Text>
-        <Picker
-          style={styles.picker}
-          //takes value from picker, updates state
-          selectedValue={this.state.amount}
-          //Changes the (value to (amount)) each time the picker value is updated, then calls the fetchdata which updated the amount state
-          onValueChange={(amount) => this.fetchData(amount)}>
-          <Picker.Item label="5" value="5" />
-          <Picker.Item label="6" value="6" />
-          <Picker.Item label="7" value="7" />
-          <Picker.Item label="8" value="8" />
-          <Picker.Item label="9" value="9" />
-          <Picker.Item label="10" value="10" />
-        </Picker>
 
-        <FlatList
-          data={this.state.persons}
-          //to give each item a key
-          keyExtractor={(x, i) => i}
-          renderItem={({ item }) =>
-            <Text style={styles.title}> 
-               {item.name}
-          </Text>}
+    const actions = [{
+      text: 'Filter',
+      name: 'bt_filter',
+      position: 1
+    }, {
+      text: 'Sort by',
+      name: 'bt_sortby',
+      position: 2
+    }];
+    return (
+
+      <View style={{ color: "black", backgroundColor: "white", flex: 1, alignItems: 'center' }}>
+        <this.SliderView />
+        <Text>Value: {this.state.price}</Text>
+
+        {/* actionbutton */}
+        <FloatingAction
+          actions={actions}
+          onPressMain={() => {
+            this.setState({ slider: !this.state.slider });
+          }
+          }
+          onPressBackdrop={() => {
+            this.setState({ slider: !this.state.slider });
+          }
+          }
+
         />
       </View>
     );
@@ -69,10 +74,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20,
-    color: "yellow",
-    textShadowColor: 'rgba(255, 255, 0, 1)',
-    textShadowOffset: { width: -0.5, height: 1 },
-    textShadowRadius: 5,
+    color: "white",
   },
   picker: {
     color: 'black',
@@ -80,4 +82,9 @@ const styles = StyleSheet.create({
     width: 50
 
   }
+  ,
+  slider: {
+    width: 250,
+    height: 150,
+  },
 });
