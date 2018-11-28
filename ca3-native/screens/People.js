@@ -17,17 +17,14 @@ export default class People extends Component {
 
   //the slider
   SliderView = () => {
-    if (this.state.slider) {
-      return <Slider
-        style={styles.slider}
-        value={this.state.price}
-        onValueChange={(price) => this.setState({ price })} 
-        maximumValue= {100}
-        minimumValue= {0} 
-        // the number to increment with for each slide
-        step= { 1 } />
-    }
-    return <Text>fff</Text>;
+    return <Slider
+      style={styles.slider}
+      value={this.state.price}
+      onValueChange={(price) => this.setState({ price })}
+      maximumValue={100}
+      minimumValue={0}
+      // the number to increment with for each slide
+      step={1} />
   }
 
 
@@ -38,31 +35,45 @@ export default class People extends Component {
   render() {
 
     const actions = [{
+      text: 'Price',
+      name: 'bt_slider',
+      position: 1,
+      render() {
+        return (<Slider
+      style={styles.slider}
+      maximumValue={100}
+      minimumValue={0}
+      // the number to increment with for each slide
+      step={1} />);
+      }
+
+    }, {
       text: 'Filter',
       name: 'bt_filter',
-      position: 1
+      position: 2
     }, {
       text: 'Sort by',
       name: 'bt_sortby',
-      position: 2
-    }];
+      position: 3
+    }
+    ];
     return (
 
       <View style={{ color: "black", backgroundColor: "white", flex: 1, alignItems: 'center' }}>
         <this.SliderView />
-        <Text>Value: {this.state.price}</Text>
+        <Text>Selected price: {this.state.price} kr</Text>
 
         {/* actionbutton */}
-        <FloatingAction
+        <FloatingAction 
           actions={actions}
           onPressMain={() => {
             this.setState({ slider: !this.state.slider });
           }
           }
-          onPressBackdrop={() => {
-            this.setState({ slider: !this.state.slider });
-          }
-          }
+          // onPressBackdrop={() => {
+          //   this.setState({ slider: !this.state.slider });
+          // }
+          // }
 
         />
       </View>
@@ -81,8 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: 50
 
-  }
-  ,
+  },
   slider: {
     width: 250,
     height: 150,
