@@ -3,9 +3,9 @@ const URL = new settings();
 //The two methods below, are the utility-methods introduced here (use them if you like):
 //https://docs.google.com/document/d/1hF9P65v_AJKCjol_gFkm3oZ1eVTuOKc15V6pcb3iFa8/edit?usp=sharing 
 
-function handleHttpErrors(res) {
+ function handleHttpErrors(res) {
   if (!res.ok) {
-    return Promise.reject({ status: res.status, fullError: res.json() })
+    return  Promise.reject({ status: res.status, fullError: res.json() })
   }
   return res.json();
 }
@@ -28,9 +28,8 @@ class DataFacade {
     return await fetch(URL.getReturnTrip(departure, destination, deptDate, returnDate)).then(handleHttpErrors)
   }
 
-  setTokenAndRole = (token, roles) => {
+  setTokenAndRole = (token) => {
     localStorage.setItem('jwtToken', token)
-    sessionStorage.setItem('roles', roles)
   }
   getToken = () => {
     return localStorage.getItem('jwtToken')

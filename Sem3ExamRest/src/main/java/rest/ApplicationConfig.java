@@ -25,6 +25,7 @@ public class ApplicationConfig extends Application {
         resources.add(cors.CorsResponseFilter.class);
         resources.add(exceptions.GenericExceptionMapper.class);
         resources.add(exceptions.NoPersonMapper.class);
+        resources.add(rest.ClientEndpoint.class);
         resources.add(rest.DemoResource.class);
         resources.add(security.JWTAuthenticationFilter.class);
         resources.add(security.LoginEndpoint.class);

@@ -6,20 +6,18 @@ class LogIn extends Component {
     super(props);
     this.state = { username: "", password: "" }
   }
-  login = (evt) => {
-    evt.preventDefault();
-    this.props.login(this.state.username, this.state.password);
-  }
-  onChange = (evt) => {
-    this.setState({ [evt.target.id]: evt.target.value })
+  login = (e) => {
+    e.preventDefault();
+    this.props.login(this.props.state.username, this.props.state.password);
   }
   render() {
     return (
       <div>
         <h2>Login</h2>
-        <form onSubmit={this.login} onChange={this.onChange} >
-          <input placeholder="User Name" id="username" />
-          <input placeholder="Password" id="password" />
+        {(this.props.state.errorMsg) ? <p style={({ color: "red", fontSize: 20, fontWeight: "bold" })}>{this.props.state.errorMsg}</p> : ""}
+        <form onSubmit={this.login} onChange={this.props.onDataChanged} >
+          <input placeholder="User Name" name="username" />
+          <input placeholder="Password" name="password" />
           <button>Login</button>
         </form>
       </div>
@@ -33,10 +31,13 @@ class LoggedIn extends Component {
   }
   componentDidMount() {
     //Instead of writing a component for each login page, we are using the username to see if the user is admin or user
-    if (sessionStorage.getItem('roles').includes('user'))
-      facade.fetchDataUser().then(res => this.setState({ dataFromServer: res }));
-    if (sessionStorage.getItem('roles').includes('admin'))
+    const base64URL = localStorage.getItem("jwtToken").split('.')[1];
+    const base64 = base64URL.replace('-', '+').replace('_', '/');
+    const payload = JSON.parse(window.atob(base64));
+    if (payload.roles.includes('admin'))
       facade.fetchDataAdmin().then(res => this.setState({ dataFromServer: res }));
+    else if (payload.roles.includes('user'))
+      facade.fetchDataUser().then(res => this.setState({ dataFromServer: res }));
 
   }
   render() {
@@ -51,26 +52,17 @@ class LoggedIn extends Component {
 class LoginApp extends Component {
   constructor(props) {
     super(props);
-    this.state = { loggedIn: false }
+    this.state = {}
   }
-  logout = () => {
-    facade.logout();
-    this.setState({ loggedIn: false });
-  }
-  login = (user, pass) => {
-    this.setState({ user })
-    facade.login(user, pass)
-      .then(res => {
-        this.setState({ loggedIn: true, roles: sessionStorage.getItem('roles') })
-      });
-  }
+
+
   render() {
     return (
       <div>
-        {!this.state.loggedIn ? (<LogIn login={this.login} />) :
+        {!this.props.state.loggedIn ? (<LogIn login={this.props.login} onDataChanged={this.props.onDataChanged} state={this.props.state} />) :
           (<div>
-            <LoggedIn user={this.state.user} />
-            <button onClick={this.logout}>Logout</button>
+            <LoggedIn user={this.props.state.user} />
+            <button onClick={this.props.logout}>Logout</button>
           </div>)}
       </div>
     )
