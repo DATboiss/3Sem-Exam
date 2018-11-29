@@ -10,7 +10,7 @@ export default class People extends Component {
     this.state = {
       data: [],
       price: 100,
-      slider: false
+      maxPrice: 100000
     }
   }
 
@@ -18,10 +18,14 @@ export default class People extends Component {
     this.setState({price: value})
   }
 
+  setMaxPrice = (value) => {
+    this.setState({maxPrice: value})
+  }
+
   //the slider
-  SliderView = (props, ChangePrice) => {
+  SliderView = (props, ChangePrice, setMaxPrice) => {
     return ([{
-      text: 'Price',
+      text: 'MaxPrice',
       name: 'bt_slider',
       position: 1,
       render() {
@@ -31,11 +35,13 @@ export default class People extends Component {
           <Slider
           style={styles.slider}
           value={props.price}
-          onValueChange={(e)=>ChangePrice(e)}
-          maximumValue={100}
+          maximumValue={props.maxPrice}
           minimumValue={0}
+          onValueChange={(e) => ChangePrice(e)}
           // the number to increment with for each slide
-          step={1} />
+          step={1}
+          onSlidingComplete={(e) => setMaxPrice(e)}
+          />
           <Text>Current max price: {props.price}</Text>
           </View>
         );
@@ -60,10 +66,11 @@ export default class People extends Component {
 
       <View style={{ color: "black", backgroundColor: "white", flex: 1, alignItems: 'center' }}>
         <Text>Price in state: {this.state.price} kr</Text>
+        <Text>MaxPrice in state: {this.state.maxPrice} kr</Text>
 
         {/* actionbutton */}
         <FloatingAction
-          actions={this.SliderView(this.state, this.ChangePrice)}
+          actions={this.SliderView(this.state, this.ChangePrice, this.setMaxPrice)}
           overlayColor="none"
           // onPressMain={() => {
           //   this.setState({ slider: !this.state.slider });
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
 
   },
   slider: {
-    width: 250,
+    width: 300,
     height: 30,
   },
 });
