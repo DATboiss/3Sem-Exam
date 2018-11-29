@@ -76,6 +76,7 @@ export default class Flights extends Component {
             }
           </Card>
           :
+          //If it's a one way
           <Card key={i} title={`${flight.departure} - ${flight.destination}`}>
             {
               <View>
@@ -103,52 +104,7 @@ export default class Flights extends Component {
               </View>
             }
           </Card>
-        //If it's a one way
-
       ));
-    // .sort((cur, next) => this.props.compare(cur[compareBy], next[compareBy], this.props.state.orderBy))
-    // .slice(0, this.state.listMaxIndex)
-    // .map((flight, i) => (
-    //   //If it's a return flight
-    // (flight.airline1) ?
-    //   <div id="result" key={i}>
-    //     <div id="takeoff">
-    //       <p>DEPARTURE FLIGHT</p>
-    //       {this.showFlightTimesReturn(flight)[0]}
-    //       <p>
-    //         {flight.airline1 + "  "}
-    //         {`${flight.departure1} - ${flight.destination1}`}
-    //       </p>
-    //     </div>
-    //     <div id="landing">
-    //       <p>RETURN FLIGHT</p>
-    //       {this.showFlightTimesReturn(flight)[1]}
-    //       <p>
-    //         {flight.airline2 + "  "}
-    //         {`${flight.departure2} - ${flight.destination2}`}
-    //       </p>
-    //     </div>
-    //     <div id="price">
-    //       {`Price: ${flight.totalPrice}`}
-    //     </div>
-
-    //   </div>
-    //     :
-    //     //If it's a one way
-    // <div id="result" key={i}>
-    //   <div id="takeoff">
-    //     <p>DEPARTURE FLIGHT</p>
-    //     {this.showFlightTimesOneWay(flight)}
-    //     <p>
-    //       {flight.airline + "  "}
-    //       {`${flight.departure} - ${flight.destination}`}
-    //     </p>
-    //   </div>
-    //   <div id="price">
-    //     {`Price: ${flight.price}`}
-    //   </div>
-    // </div>
-    // ));
     return flights;
   }
 
@@ -160,12 +116,12 @@ export default class Flights extends Component {
             :
             (this.props.state.loading) ? "Loading..." : "No flights found matching your criteria"
         }
-        {(this.state.listMaxIndex < this.props.flights.length) ? 
-        <TouchableHighlight style={styles.button} onPress={this.findNextItems} underlayColor="white">
-          <View>
-            <Text>More flights</Text>
-          </View>
-        </TouchableHighlight> : ""}
+        {(this.state.listMaxIndex < this.props.flights.length) ?
+          <TouchableHighlight style={styles.button} onPress={this.findNextItems} underlayColor="white">
+            <View>
+              <Text>More flights</Text>
+            </View>
+          </TouchableHighlight> : ""}
       </View>
     )
   }
