@@ -4,7 +4,6 @@ import { FloatingAction } from 'react-native-floating-action';
 // import { Slider } from 'react-native-elements'
 
 
-
 export default class People extends Component {
   constructor(props) {
     super(props);
@@ -15,36 +14,31 @@ export default class People extends Component {
     }
   }
 
+  ChangePrice = (value) => {
+    this.setState({price: value})
+  }
+
   //the slider
-  SliderView = () => {
-    return <Slider
-      style={styles.slider}
-      value={this.state.price}
-      onValueChange={(price) => this.setState({ price })}
-      maximumValue={100}
-      minimumValue={0}
-      // the number to increment with for each slide
-      step={1} />
-  }
-
-
-  async componentDidMount() {
-
-  }
-
-  render() {
-
-    const actions = [{
+  SliderView = (props, ChangePrice) => {
+    return ([{
       text: 'Price',
       name: 'bt_slider',
       position: 1,
       render() {
-        return (<Slider
-      style={styles.slider}
-      maximumValue={100}
-      minimumValue={0}
-      // the number to increment with for each slide
-      step={1} />);
+        return (
+        <View>
+          <Text>Choose max price</Text>
+          <Slider
+          style={styles.slider}
+          value={props.price}
+          onValueChange={(e)=>ChangePrice(e)}
+          maximumValue={100}
+          minimumValue={0}
+          // the number to increment with for each slide
+          step={1} />
+          <Text>Current max price: {props.price}</Text>
+          </View>
+        );
       }
 
     }, {
@@ -56,24 +50,29 @@ export default class People extends Component {
       name: 'bt_sortby',
       position: 3
     }
-    ];
+    ]);
+  }
+
+
+  render = () => {
+
     return (
 
       <View style={{ color: "black", backgroundColor: "white", flex: 1, alignItems: 'center' }}>
-        <this.SliderView />
-        <Text>Selected price: {this.state.price} kr</Text>
+        <Text>Price in state: {this.state.price} kr</Text>
 
         {/* actionbutton */}
-        <FloatingAction 
-          actions={actions}
-          onPressMain={() => {
-            this.setState({ slider: !this.state.slider });
-          }
-          }
-          // onPressBackdrop={() => {
+        <FloatingAction
+          actions={this.SliderView(this.state, this.ChangePrice)}
+          overlayColor="none"
+          // onPressMain={() => {
           //   this.setState({ slider: !this.state.slider });
           // }
           // }
+        // onPressBackdrop={() => {
+        //   this.setState({ slider: !this.state.slider });
+        // }
+        // }
 
         />
       </View>
@@ -95,6 +94,6 @@ const styles = StyleSheet.create({
   },
   slider: {
     width: 250,
-    height: 150,
+    height: 30,
   },
 });
