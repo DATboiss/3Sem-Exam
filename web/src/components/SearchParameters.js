@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Result from './Result'
+import ResultList from './ResultList'
 import dataFacade from '../dataFacade'
 import BeatLoader from 'react-spinners/BeatLoader'
 
@@ -65,11 +65,10 @@ export default class SearchParameter extends Component {
                 <div>
 
                     {
-                        (this.state.resultsMounted) ? (this.state.searched) ? <BeatLoader /> : "" : <Result state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.props.tripType} />
+                        (this.state.resultsMounted) ? (this.state.searched) ? <BeatLoader /> : "" : <ResultList state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.props.tripType} />
                     }
                 </div>
             </>
         )
     }
-
 }

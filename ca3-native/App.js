@@ -1,39 +1,59 @@
 import React from 'react';
-import { Text, View, Platform, TouchableOpacity, StyleSheet } from 'react-native';
-import { Constants } from "expo";
+import { Text, View, Platform, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { createStackNavigator } from 'react-navigation';
-import People from './screens/People'
-
-
+import FlightList from './screens/FlightList'
+import SearchParameter from './Components/SearchParameters'
 
 
 const Touchable = (props) => (
-  <TouchableOpacity style={styles.button} onPress={props.onPress}>
-    <Text style={styles.buttonText}>{props.title}</Text>
+  <TouchableOpacity onPress={props.onPress}>
+    <Text >{props.title}</Text>
   </TouchableOpacity>)
 
 class HomeScreen extends React.Component {
-  static navigationOptions = { title: 'Star Wars API' };
+  constructor(props) {
+    super(props)
+    this.state = { tripType: "returntrip", date1: undefined, date2: undefined, date: undefined}
+  }
+  onDataChanged = (name, value) => {
+    this.setState({ [name]: value })
+  }
+  removeReturnDate = () => {
+    this.setState({ dateReturn: undefined });
+  }
+
+  setTripType = async (name) => {
+    if (name === "oneway") {
+      this.removeReturnDate();
+    }
+    await this.setState({ tripType: name })
+    console.log(this.state.tripType);
+  }
+
+  static navigationOptions = { title: 'DATWays' }; //TODO CHANGE NAME
   render() {
     const { navigate } = this.props.navigation;
     return (
-        <View style={{ backgroundColor: "black", flex: 1 }} >
-          <Text style={styles.title}>Welcome to the Star Wars Database</Text>
-          <Text style={styles.title}>Press the button to search for characters</Text>
-          <Touchable onPress={() => navigate('people')} title="Search People" />
-        </View>
+      <ScrollView>
+        <SearchParameter state={this.state} onDataChanged={this.onDataChanged} removeArrivalDate={this.removeArrivalDate} tripType={this.tripType} setTripType={this.setTripType} />
+        {/* <Touchable onPress={() => navigate('people')} title="Search flight" /> */}
+        
+      </ScrollView>
     )
   }
 }
 
-export default App = () => <RouteStack style={{ marginTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight / 2 }} />
 
 const RouteStack = createStackNavigator({
   Home: { screen: HomeScreen },
-  people: { screen: People },
+  people: { screen: FlightList },
 
 
 });
+
+export default App = () => <RouteStack />
+
 
 const styles = StyleSheet.create({
   title: {
