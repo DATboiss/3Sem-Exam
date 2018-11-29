@@ -7,9 +7,8 @@ export default class Flights extends Component {
   constructor(props) {
     super(props);
     this.state = { listMaxIndex: 5, hasMore: true }
-    console.log(props);
-
   }
+
   showFlightTimesReturn(flight) {
     return (
       //initial flight (departure)
@@ -21,6 +20,7 @@ export default class Flights extends Component {
       ]
     )
   }
+  
   showFlightTimesOneWay(flight) {
     return (
       <Text>{`${flight.depTime.slice(11, 13)}:${flight.depTime.slice(14, 16)} - ${flight.arrTime.slice(11, 13)}:${flight.arrTime.slice(14, 16)}  -  `}

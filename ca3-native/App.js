@@ -28,7 +28,6 @@ class HomeScreen extends React.Component {
       this.removeReturnDate();
     }
     await this.setState({ tripType: name })
-    console.log(this.state.tripType);
   }
 
   static navigationOptions = { title: 'DATWays' }; //TODO CHANGE NAME

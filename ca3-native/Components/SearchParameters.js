@@ -29,7 +29,6 @@ export default class SearchParameter extends Component {
         else {
             const flights = await dataFacade.getOneWayRoutes(departure, destination, date)
             this.setState({ flights: flights, resultsMounted: false, searched: false })
-            console.log("fetchFligths" + this.props.state.tripType);
         }
         
     }
@@ -85,7 +84,7 @@ export default class SearchParameter extends Component {
                         <Text>Search for flight</Text>
                     </View>
                 </TouchableHighlight>
-                <Text>{JSON.stringify(this.props.state)}</Text>
+                {/* <Text>{JSON.stringify(this.props.state)}</Text> */}
             </>
         );
     }
@@ -122,7 +121,7 @@ export default class SearchParameter extends Component {
                     </View>
                 </TouchableHighlight>
 
-                <Text>{JSON.stringify(this.props.state)}</Text>
+                {/* <Text>{JSON.stringify(this.props.state)}</Text> */}
             </>
         );
     }
