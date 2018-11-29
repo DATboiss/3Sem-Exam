@@ -39,7 +39,6 @@ export default class SearchParameter extends Component {
             <input type="date" name="dateReturn" placeholder="Return Date" />
             {/* <input type="text" name="passengers" /> */}
             <button>Submit</button>
-            {/* <p>{JSON.stringify(this.props.state)}</p> */}
         </form>
     }
 
@@ -50,7 +49,6 @@ export default class SearchParameter extends Component {
             <input type="date" name="dateDeparture" />
             {/* <input type="text" name="passengers" /> */}
             <button>Submit</button>
-            {/* <p>{JSON.stringify(this.props.state)}</p> */}
         </form>
     }
 
@@ -65,7 +63,9 @@ export default class SearchParameter extends Component {
                 <div>
 
                     {
-                        (this.state.resultsMounted) ? (this.state.searched) ? <BeatLoader /> : "" : <Result state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.props.tripType} />
+                        (this.state.resultsMounted) ? 
+                        (this.state.searched) ? <BeatLoader /> : "" 
+                        : <Result state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.props.tripType} />
                     }
                 </div>
             </>

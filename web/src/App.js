@@ -15,6 +15,14 @@ class App extends Component {
     super(props)
     this.state = { loggedIn: false, tripType: "returntrip", account: {} }
   }
+  componentDidMount(){
+    const base64URL = localStorage.getItem("jwtToken").split('.')[1];
+    const base64 = base64URL.replace('-', '+').replace('_', '/');
+    const payload = JSON.parse(window.atob(base64));
+    this.setState({
+      loggedIn: true, username: payload.sub
+    })
+  }
 
   onDataChanged = (e) => {
     if (e)

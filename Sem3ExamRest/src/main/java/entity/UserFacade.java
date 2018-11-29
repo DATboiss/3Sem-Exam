@@ -29,10 +29,20 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
-            user = em.createQuery("SELECT u FROM User u where u.userName = :username", User.class).setParameter("username", username).getSingleResult();
+            user = em.createQuery("SELECT u FROM User u where u.username = :username", User.class).setParameter("username", username).getSingleResult();
             if (user == null || !user.verifyPassword(password)) { 
                 throw new AuthenticationException("Invalid user name or password");
             }
+        } finally {
+            em.close();
+        }
+        return user;
+    }
+    public UserDTO getUserDTO(String username) throws AuthenticationException {
+        EntityManager em = emf.createEntityManager();
+        UserDTO user;
+        try {
+            user = em.createQuery("SELECT new entity.UserDTO(u) FROM User u where u.username = :username", UserDTO.class).setParameter("username", username).getSingleResult();
         } finally {
             em.close();
         }

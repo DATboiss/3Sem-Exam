@@ -31,10 +31,10 @@ public class RegisterEndPoint {
             User user = GSON.fromJson(jsonString, User.class);
             user.encryptUserPass();
             user = UserFacade.getInstance().createNewUser(user);
-            String userJson = GSON.toJson(user);
+            String userJson = GSON.toJson("ok");
             JsonObject responseJson = new JsonObject();
             responseJson.addProperty("user", userJson);
-            return Response.ok(new Gson().toJson(responseJson)).build();
+            return Response.ok(new Gson().toJson("ok")).build();
         } catch (Exception ex) {
             if (ex instanceof AuthenticationException) {
                 throw (AuthenticationException) ex;

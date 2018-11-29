@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import facade from "../dataFacade";
-import { HashRouter as Router, Route, NavLink, Redirect } from 'react-router-dom';
 
 
 class LogIn extends Component {
@@ -19,7 +18,7 @@ class LogIn extends Component {
         {(this.props.state.errorMsg) ? <p style={({ color: "red", fontSize: 20, fontWeight: "bold" })}>{this.props.state.errorMsg}</p> : ""}
         <form onSubmit={this.login} onChange={this.props.onDataChanged} >
           <input placeholder="User Name" name="username" />
-          <input placeholder="Password" name="password" />
+          <input placeholder="Password" name="password" type="password" />
           <button>Login</button>
         </form>
       </div>
@@ -38,21 +37,27 @@ class LoggedIn extends Component {
     const payload = JSON.parse(window.atob(base64));
     if (payload.roles.includes('admin'))
       facade.fetchDataAdmin().then(res => this.setState({ dataFromServer: res }))
-      .catch(e => {
-        if(e.fullError)
-          e.fullError.then(e => this.setState({errorMsg: e.errorMessage}))
-          else 
-          this.setState({errorMsg: "Something went wrong with the server"})
-      });
+        .catch(e => {
+          if (e.fullError)
+            e.fullError.then(e => this.setState({ errorMsg: e.errorMessage }))
+          else
+            this.setState({ errorMsg: "Something went wrong with the server" })
+        });
     else if (payload.roles.includes('user'))
       facade.fetchDataUser().then(res => this.setState({ dataFromServer: res }));
-
   }
   render() {
     return (
-      <div>
-        <h2>Data Received from server</h2>
-        {(!this.state.errorMsg)?<h3>{this.state.dataFromServer}</h3>:<h3 style={({color:"red"})}>{this.state.errorMsg}</h3>}
+      <div className="profileContainer">
+        <div className="profileInformation">
+          {(!this.state.errorMsg) ? <h3>This is your profile: {this.state.dataFromServer.username}</h3> : <h3 style={({ color: "red" })}>{this.state.errorMsg}</h3>}
+          <ul style={({ listStyle: "none", textAlign: "center" })}>
+            <li><span className="profileTitle">Username: </span><span className="profileValue">{this.state.dataFromServer.username}</span> </li>
+            <li><span className="profileTitle">Email: </span><span className="profileValue">{this.state.dataFromServer.email}</span></li>
+            <li><span className="profileTitle">Name: </span><span className="profileValue">{this.state.dataFromServer.name}</span></li>
+            <li><span className="profileTitle">City: </span><span className="profileValue">{this.state.dataFromServer.city}</span></li>
+          </ul>
+        </div>
       </div>
     )
   }
@@ -70,7 +75,6 @@ class LoginApp extends Component {
         {!this.props.state.loggedIn ? (<LogIn login={this.props.login} onDataChanged={this.props.onDataChanged} state={this.props.state} />) :
           (<div>
             <LoggedIn user={this.props.state.user} errorMsg={this.props.errorMsg} />
-            <button onClick={this.props.logout}>Logout</button>
           </div>)}
       </div>
     )

@@ -47,8 +47,8 @@ public class User implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "user_name", length = 25)
-    private String userName;
+    @Column(name = "username", length = 25)
+    private String username;
 
     @Basic(optional = false)
     @NotNull
@@ -57,7 +57,7 @@ public class User implements Serializable {
     private String userPass;
 
     @JoinTable(name = "user_roles", joinColumns = {
-        @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
+        @JoinColumn(name = "username", referencedColumnName = "username")}, inverseJoinColumns = {
         @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Role> roleList = new ArrayList();
@@ -80,25 +80,39 @@ public class User implements Serializable {
         return BCrypt.checkpw(pw, userPass);
     }
 
-    public User(String userName, String userPass) {
-        this.userName = userName;
+    public User(String username, String userPass) {
+        this.username = username;
         this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
     }
 
-    public User(String email, String name, String city, String userName, String userPass) {
+    public User(String email, String name, String city, String username, String userPass) {
         this.email = email;
         this.name = name;
         this.city = city;
-        this.userName = userName;
+        this.username = username;
         this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
     }
 
-    public String getUserName() {
-        return userName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getName() {
+        return name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getUserPass() {
@@ -127,7 +141,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", email=" + email + ", name=" + name + ", city=" + city + ", userName=" + userName + ", userPass=" + userPass + ", roleList=" + roleList + '}';
+        return "User{" + "id=" + id + ", email=" + email + ", name=" + name + ", city=" + city + ", userName=" + username + ", userPass=" + userPass + ", roleList=" + roleList + '}';
     }
 
 }
