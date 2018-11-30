@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import dataFacade from '../dataFacade';
-import { HashRouter as Router, Route, NavLink, Redirect } from 'react-router-dom';
+import { HashRouter as Redirect } from 'react-router-dom';
 
 
 
@@ -44,8 +44,7 @@ export default class Register extends Component {
                 else {
                     this.setState({ errorMsg: "Something went wrong with the server" })
                 }
-            }
-            )
+            })
         if (!this.state.errorMsg) {
             await this.props.login(this.state.username, this.state.userPass)
             this.setState({ registered: true })

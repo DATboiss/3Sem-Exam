@@ -30,21 +30,24 @@ class LoggedIn extends Component {
     super(props);
     this.state = { dataFromServer: "Fetching!!" };
   }
-  componentDidMount() {
+  async componentDidMount() {
     //Instead of writing a component for each login page, we are using the username to see if the user is admin or user
     const base64URL = localStorage.getItem("jwtToken").split('.')[1];
     const base64 = base64URL.replace('-', '+').replace('_', '/');
     const payload = JSON.parse(window.atob(base64));
-    if (payload.roles.includes('admin'))
-      facade.fetchDataAdmin().then(res => this.setState({ dataFromServer: res }))
-        .catch(e => {
-          if (e.fullError)
-            e.fullError.then(e => this.setState({ errorMsg: e.errorMessage }))
-          else
-            this.setState({ errorMsg: "Something went wrong with the server" })
-        });
-    else if (payload.roles.includes('user'))
-      facade.fetchDataUser().then(res => this.setState({ dataFromServer: res }));
+    try {
+      if (payload.roles.includes('admin'))
+        await facade.fetchDataAdmin().then(res => this.setState({ dataFromServer: res }))
+      else if (payload.roles.includes('user'))
+        await facade.fetchDataUser().then(res => this.setState({ dataFromServer: res }));
+    } catch (e) {
+      console.log(e)
+      if (e.fullError) {
+        this.setState({ errorMsg: e.errorMessage })
+      } else {
+        this.setState({ errorMsg: "Something went wrong with the server" })
+      }
+    }
   }
   render() {
     return (
