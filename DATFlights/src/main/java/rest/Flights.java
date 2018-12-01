@@ -59,7 +59,7 @@ public class Flights {
     @Path("create")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createSchema() throws ParseException {
-        SchemaBuilder.createSchema();
+//        SchemaBuilder.createSchema();
         return Response.status(Response.Status.ACCEPTED).entity("Hej det virker").build();
     }
 }
