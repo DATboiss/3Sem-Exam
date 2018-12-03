@@ -37,32 +37,32 @@ public class Generator {
         airports.add(new Airport("Paris", "Frankrig", "FR", "CDG"));
         airports.add(new Airport("Amsterdam", "Holland", "NL", "AMS"));
         airports.add(new Airport("Frankfurt", "Tyskland", "DE", "FRA"));
-        airports.add(new Airport("Istanbul", "Tyrkiet", "TR", "IST"));
         airports.add(new Airport("Madrid", "Spanien", "ES", "MAD"));
-        airports.add(new Airport("Barcelona", "Spanien", "ES", "BCN"));
-        airports.add(new Airport("München", "Tyskland", "DE", "MUC"));
-        airports.add(new Airport("Rom", "Italien", "IT", "FCO"));
-        airports.add(new Airport("Moskva", "Rusland", "RU", "SVO"));
-        airports.add(new Airport("Paris", "Frankrig", "FR", "ORY"));
-        airports.add(new Airport("Moskva", "Rusland", "RU", "DME"));
-        airports.add(new Airport("Dublin", "Irland", "IE", "DUB"));
-        airports.add(new Airport("Zürich", "Schweiz", "CH", "ZRH"));
-        airports.add(new Airport("København", "Danmark", "DK", "CPH"));
-        airports.add(new Airport("Palma de Mallorca", "Spanien", "SP", "PMI"));
-        airports.add(new Airport("Manchester", "England", "UK", "MAN"));
-        airports.add(new Airport("Oslo", "Norge", "NO", "OSL"));
-        airports.add(new Airport("Lissabon", "Portugal", "PT", "LIS"));
-        airports.add(new Airport("Stockholm", "Sverige", "SW", "ARN"));
-        airports.add(new Airport("London", "England", "UK", "STN"));
-        airports.add(new Airport("Bruxelles", "Belgien", "BE", "BRU"));
-        airports.add(new Airport("Düsseldorf", "Tyskland", "DE", "DUS"));
-        airports.add(new Airport("Wien", "Østrig", "AT", "VIE"));
-        airports.add(new Airport("Milano", "Italien", "IT", "MXP"));
-        airports.add(new Airport("Athen", "Grækenland", "GR", "ATH"));
-        airports.add(new Airport("Berlin", "Tyskland", "DE", "TXL"));
-        airports.add(new Airport("Helsinki", "Finland", "FI", "HEL"));
-        airports.add(new Airport("Málaga", "Spanien", "ES", "AGP"));
-        airports.add(new Airport("London", "England", "UK", "LGW"));
+//        airports.add(new Airport("Istanbul", "Tyrkiet", "TR", "IST"));
+//        airports.add(new Airport("Barcelona", "Spanien", "ES", "BCN"));
+//        airports.add(new Airport("München", "Tyskland", "DE", "MUC"));
+//        airports.add(new Airport("Rom", "Italien", "IT", "FCO"));
+//        airports.add(new Airport("Moskva", "Rusland", "RU", "SVO"));
+//        airports.add(new Airport("Paris", "Frankrig", "FR", "ORY"));
+//        airports.add(new Airport("Moskva", "Rusland", "RU", "DME"));
+//        airports.add(new Airport("Dublin", "Irland", "IE", "DUB"));
+//        airports.add(new Airport("Zürich", "Schweiz", "CH", "ZRH"));
+//        airports.add(new Airport("København", "Danmark", "DK", "CPH"));
+//        airports.add(new Airport("Palma de Mallorca", "Spanien", "SP", "PMI"));
+//        airports.add(new Airport("Manchester", "England", "UK", "MAN"));
+//        airports.add(new Airport("Oslo", "Norge", "NO", "OSL"));
+//        airports.add(new Airport("Lissabon", "Portugal", "PT", "LIS"));
+//        airports.add(new Airport("Stockholm", "Sverige", "SW", "ARN"));
+//        airports.add(new Airport("London", "England", "UK", "STN"));
+//        airports.add(new Airport("Bruxelles", "Belgien", "BE", "BRU"));
+//        airports.add(new Airport("Düsseldorf", "Tyskland", "DE", "DUS"));
+//        airports.add(new Airport("Wien", "Østrig", "AT", "VIE"));
+//        airports.add(new Airport("Milano", "Italien", "IT", "MXP"));
+//        airports.add(new Airport("Athen", "Grækenland", "GR", "ATH"));
+//        airports.add(new Airport("Berlin", "Tyskland", "DE", "TXL"));
+//        airports.add(new Airport("Helsinki", "Finland", "FI", "HEL"));
+//        airports.add(new Airport("Málaga", "Spanien", "ES", "AGP"));
+//        airports.add(new Airport("London", "England", "UK", "LGW"));
     }
 
     public Flight generateFlights() {
@@ -70,9 +70,9 @@ public class Generator {
 
         String[] airplaneModels = {"Airbus A321", "Boeing 747", "Boeing 787", "Airbus A320", "Airbus A380", "Douglas DC-9"};
         Random rand = new Random();
-        deptMonth = (rand.nextInt(12) + 1);
+        deptMonth = (1);
         int daysInMonth = getMonthMaxDate(deptMonth);
-        deptDay = (rand.nextInt(daysInMonth) + 1);
+        deptDay = (rand.nextInt(14) + 1);
         deptHour = rand.nextInt(23);
         deptMinute = rand.nextInt(60);
         int duration = rand.nextInt(1321) + 120;
@@ -85,6 +85,7 @@ public class Generator {
         String destination = airports.get(destinationIndex).getAirportCode();
         while (destinationIndex == departureIndex) {
             destinationIndex = rand.nextInt(airports.size());
+            destination = airports.get(destinationIndex).getAirportCode();
         }
         String deptMonthString = verifyNumberFormat(deptMonth);
         String deptDayString = verifyNumberFormat(deptDay);

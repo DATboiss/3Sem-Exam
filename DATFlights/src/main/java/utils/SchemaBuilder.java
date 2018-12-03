@@ -26,12 +26,12 @@ public class SchemaBuilder {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ParseException {
+    public static void generate() {
         Persistence.generateSchema("pu", null);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
         Generator generator = new Generator();
-        for (int i = 0; i < 1500; i++) {
+        for (int i = 0; i < 500; i++) {
             Flight flight = generator.generateFlights();
             EntityManager em = emf.createEntityManager();
             try {
