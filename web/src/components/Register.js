@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import dataFacade from '../dataFacade';
-import { HashRouter as Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom'
 
 
 
@@ -48,38 +48,46 @@ export default class Register extends Component {
         if (!this.state.errorMsg) {
             await this.props.login(this.state.username, this.state.userPass)
             this.setState({ registered: true })
+
         }
     }
 
     render() {
         return (
             <>
-                <form onChange={this.onChange} onSubmit={this.validateFormInput}>
-                    <ul style={({ listStyle: "none" })} >
-                        <li>
-                            {(this.state.errorMsg) ? <p style={({ color: "red", fontSize: 22, fontWeight: "bold" })}>{this.state.errorMsg}</p> : ""}
-                            <input type="text" name="username" placeholder="username" required />
-                        </li>
-                        <li>
-                            <input type="text" name="email" placeholder="email" required />
-                        </li>
-                        <li>
-                            <input type="text" name="name" placeholder="name" required />
-                        </li>
-                        <li>
-                            <input type="text" name="city" placeholder="city" required />
-                        </li>
-                        <li>
-                            <input type="password" name="userPass" placeholder="password" required />
-                        </li>
-                        <li>
-                            <input type="password" name="userPass2" placeholder="reenter password" required />
-                        </li>
-                        <li><button>Register</button></li>
-                    </ul>
-                    <p>{JSON.stringify(this.state)}</p>
-                </form>
-                {(this.state.registered) ? <Redirect to="/login" /> : ""}
+                {(this.state.registered) ?
+                    <>
+                    <Redirect to={'/login'}/>
+                        <p>"Registered succesfully!"</p>
+                    </>
+                    :
+                    <form onChange={this.onChange} onSubmit={this.validateFormInput}>
+                        <ul style={({ listStyle: "none" })} >
+                            <li>
+                                {(this.state.errorMsg) ? <p style={({ color: "red", fontSize: 22, fontWeight: "bold" })}>{this.state.errorMsg}</p> : ""}
+                                <input type="text" name="username" placeholder="username" required />
+                            </li>
+                            <li>
+                                <input type="text" name="email" placeholder="email" required />
+                            </li>
+                            <li>
+                                <input type="text" name="name" placeholder="name" required />
+                            </li>
+                            <li>
+                                <input type="text" name="city" placeholder="city" required />
+                            </li>
+                            <li>
+                                <input type="password" name="userPass" placeholder="password" required />
+                            </li>
+                            <li>
+                                <input type="password" name="userPass2" placeholder="reenter password" required />
+                            </li>
+                            <li><button>Register</button></li>
+                        </ul>
+                        {/* <p>{JSON.stringify(this.state)}</p> */}
+                    </form>
+                }
+                {/* {(this.state.shouldRedirect) ? <Redirect to='/login' /> : ""} */}
             </>
         )
     }

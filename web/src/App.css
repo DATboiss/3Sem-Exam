@@ -1,6 +1,7 @@
 body {
   text-align: center;
   background-color: #3963b1;
+  color: white;
 }
 #resultBodyContainer {
   display: flex;

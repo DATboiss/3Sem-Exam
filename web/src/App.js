@@ -16,15 +16,15 @@ class App extends Component {
     this.state = { loggedIn: false, tripType: "returntrip", account: {} }
   }
   componentDidMount(){
-    if (localStorage.getItem("jwtToken"))
-    {
-      const base64URL = localStorage.getItem("jwtToken").split('.')[1];
-      const base64 = base64URL.replace('-', '+').replace('_', '/');
-      const payload = JSON.parse(window.atob(base64));
-      this.setState({
-        loggedIn: true, username: payload.sub
-      })
-    }
+    // if (localStorage.getItem("jwtToken"))
+    // {
+    //   const base64URL = localStorage.getItem("jwtToken").split('.')[1];
+    //   const base64 = base64URL.replace('-', '+').replace('_', '/');
+    //   const payload = JSON.parse(window.atob(base64));
+    //   this.setState({
+    //     loggedIn: true, username: payload.sub
+    //   })
+    // }
   }
 
   onDataChanged = (e) => {
@@ -109,9 +109,9 @@ const Header = (props) => (
     <li>
       <NavLink exact to="/">Home</NavLink>
     </li>
-    <li>
+    {/* <li>
       <NavLink to="/persons">Persons</NavLink>
-    </li>
+    </li> */}
     <li>
       <NavLink to="/login">{(props.loggedIn) ? props.username : "Login"}</NavLink>
       {(props.loggedIn) ? <NavLink to="/logout" onClick={props.logout}>Log out</NavLink> : ""}
