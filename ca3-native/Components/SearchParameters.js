@@ -30,60 +30,72 @@ export default class SearchParameter extends Component {
             const flights = await dataFacade.getOneWayRoutes(departure, destination, date)
             this.setState({ flights: flights, resultsMounted: false, searched: false })
         }
-        
+
     }
 
     returnTrip() {
         return (
             <>
-                <TextInput type="text" name="departure" placeholder="Departure" onChangeText={(e) => this.props.onDataChanged("departure", e)} />
-                <TextInput type="text" name="destinati" placeholder="Destination" onChangeText={(e) => this.props.onDataChanged("destination", e)} />
-                <DatePicker style={{ width: 200 }}
-                    date={this.props.state.date1}
-                    mode="date"
-                    placeholder="Departure date"
-                    format="YYYY-MM-DD"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0
-                        },
-                        dateInput: {
-                            marginLeft: 36
-                        }
-                    }}
-                    onDateChange={(e) => this.props.onDataChanged("date1", e)}
-                />
-                <DatePicker style={{ width: 200 }}
-                    date={this.props.state.date2}
-                    mode="date"
-                    placeholder="Return date"
-                    format="YYYY-MM-DD"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0
-                        },
-                        dateInput: {
-                            marginLeft: 36
-                        }
-                    }}
-                    onDateChange={(e) => this.props.onDataChanged("date2", e)}
-                />
-                <TextInput type="text" name="passengers" />
-                <TouchableHighlight style={styles.button} id="returnSubmitButton" onPress={this.fetchFlights} underlayColor="white">
-                    <View>
-                        <Text>Search for flight</Text>
-                    </View>
-                </TouchableHighlight>
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.input} type="text" autoCapitalize="characters" name="departure" placeholder="Departure" onChangeText={(e) => this.props.onDataChanged("departure", e)} />
+                    <TextInput style={styles.input} type="text" autoCapitalize="characters" name="destination" placeholder="Destination" onChangeText={(e) => this.props.onDataChanged("destination", e)} />
+                    <TextInput style={styles.input} type="text" keyboardType="numeric" name="passengers" placeholder="Passengers" onChangeText={(e) => this.props.onDataChanged("passengers", e)} />
+                </View>
+                <View style={styles.dateContainer}>
+                    <DatePicker style={{ width: 200 }}
+                        date={this.props.state.date1}
+                        mode="date"
+                        // placeholder="Departure date"
+                        format="YYYY-MM-DD"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        customStyles={{
+                            dateIcon: {
+                                position: 'absolute',
+                                left: 0,
+                                top: 4,
+                            },
+                            dateInput: {
+                                marginLeft: 36,
+                                marginTop: 10
+                            },
+                            dateText: {
+                                color: "white"
+                            }
+                        }}
+                        onDateChange={(e) => this.props.onDataChanged("date1", e)}
+                    />
+                    <DatePicker style={{ width: 200 }}
+                        date={this.props.state.date2}
+                        mode="date"
+                        // placeholder="Return date"
+                        format="YYYY-MM-DD"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        customStyles={{
+                            dateIcon: {
+                                position: 'absolute',
+                                left: 0,
+                                top: 4,
+                            },
+                            dateInput: {
+                                marginLeft: 36,
+                                marginTop: 10
+                            },
+                            dateText: {
+                                color: "white"
+                            }
+                        }}
+                        onDateChange={(e) => this.props.onDataChanged("date2", e)}
+                    />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <TouchableHighlight style={styles.button} id="returnSubmitButton" onPress={this.fetchFlights} underlayColor="white">
+                        <View>
+                            <Text style={styles.buttonText}>Search for flight</Text>
+                        </View>
+                    </TouchableHighlight>
+                </View>
                 {/* <Text>{JSON.stringify(this.props.state)}</Text> */}
             </>
         );
@@ -92,34 +104,44 @@ export default class SearchParameter extends Component {
     oneWayTrip() {
         return (
             <>
-                <TextInput type="text" name="departure" placeholder="Departure" onChangeText={(e) => this.props.onDataChanged("departure", e)} />
-                <TextInput type="text" name="destination" placeholder="Destination" onChangeText={(e) => this.props.onDataChanged("destination", e)} />
-                <DatePicker style={{ width: 200 }}
-                    date={this.props.state.date}
-                    mode="date"
-                    placeholder="Departure date"
-                    format="YYYY-MM-DD"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0
-                        },
-                        dateInput: {
-                            marginLeft: 36
-                        }
-                    }}
-                    onDateChange={(e) => this.props.onDataChanged("date", e)}
-                />
-                <TextInput type="text" name="passengers" />
-                <TouchableHighlight style={styles.button} id="oneWaySubmitButton" onPress={this.fetchFlights} underlayColor="white">
-                    <View>
-                        <Text>Search for flight</Text>
-                    </View>
-                </TouchableHighlight>
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.input} type="text" autoCapitalize="characters" name="departure" placeholder="Departure" onChangeText={(e) => this.props.onDataChanged("departure", e)} />
+                    <TextInput style={styles.input} type="text" autoCapitalize="characters" name="destination" placeholder="Destination" onChangeText={(e) => this.props.onDataChanged("destination", e)} />
+                    <TextInput style={styles.input} type="text" keyboardType="numeric" name="passengers" placeholder="Passengers" onChangeText={(e) => this.props.onDataChanged("passengers", e)} />
+                </View>
+                <View style={styles.dateContainer}>
+                    <DatePicker style={{ width: 200 }}
+                        date={this.props.state.date}
+                        mode="date"
+                        placeholder="Departure date"
+                        format="YYYY-MM-DD"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        customStyles={{
+                            dateIcon: {
+                                position: 'absolute',
+                                left: 0,
+                                top: 4,
+                                marginTop: 10
+                            },
+                            dateInput: {
+                                marginLeft: 36,
+                                marginTop: 10
+                            },
+                            dateText: {
+                                color: "white"
+                            }
+                        }}
+                        onDateChange={(e) => this.props.onDataChanged("date", e)}
+                    />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <TouchableHighlight style={styles.button} id="oneWaySubmitButton" onPress={this.fetchFlights} underlayColor="white">
+                        <View>
+                            <Text style={styles.buttonText}>Search for flight</Text>
+                        </View>
+                    </TouchableHighlight>
+                </View>
 
                 {/* <Text>{JSON.stringify(this.props.state)}</Text> */}
             </>
@@ -129,21 +151,23 @@ export default class SearchParameter extends Component {
     render() {
         return (
             <View>
-                <TouchableHighlight style={styles.button} id="oneway" onPress={() => this.props.setTripType("oneway")} underlayColor="white">
-                    <View>
-                        <Text>One way</Text>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button} id="returntrip" onPress={() => this.props.setTripType("returntrip")} underlayColor="white">
-                    <View>
-                        <Text>Return trip</Text>
-                    </View>
-                </TouchableHighlight>
+                <View style={styles.buttonContainer}>
+                    <TouchableHighlight style={styles.button} id="oneway" onPress={() => this.props.setTripType("oneway")} underlayColor="white">
+                        <View>
+                            <Text style={styles.buttonText}>One way</Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.button} id="returntrip" onPress={() => this.props.setTripType("returntrip")} underlayColor="white">
+                        <View>
+                            <Text style={styles.buttonText}>Return trip</Text>
+                        </View>
+                    </TouchableHighlight>
+                </View>
                 {
                     (this.props.state.tripType === "returntrip") ? this.returnTrip() : this.oneWayTrip()
                 }
                 {
-                    (this.state.resultsMounted) ? (this.state.searched) ? <Text>Loading...</Text> : <Text> </Text> : <FlightList state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.state.tripType} />
+                    (this.state.resultsMounted) ? (this.state.searched) ? <Text>Loading...</Text> : <Text> </Text> : <FlightList state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.state.tripType} passengers={this.props.state.passengers} />
                 }
             </View>
         )
@@ -156,14 +180,45 @@ const styles = StyleSheet.create({
         paddingTop: 60,
         alignItems: 'center'
     },
+    inputContainer: {
+        // flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-evenly"
+    },
+    buttonContainer: {
+        // flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-evenly"
+    },
+    dateContainer: {
+        // flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-evenly"
+    },
+    input: {
+        textAlign: 'center',
+        color: 'white',
+        borderColor: '#2196F3',
+        borderWidth: 2,
+        height: 40,
+        width: 120
+    },
     button: {
+        marginTop: 10,
         marginBottom: 30,
-        width: 260,
+        width: 160,
+        height: 30,
         alignItems: 'center',
-        backgroundColor: '#2196F3'
+        backgroundColor: '#2196F3',
+        shadowOffset: { 
+            width: 10, 
+            height: 10, 
+        },
+        shadowColor: 'black',
+        shadowOpacity: 1.0,
     },
     buttonText: {
-        padding: 20,
-        color: 'white'
+        color: 'white',
+        fontWeight: "bold"
     }
 });

@@ -12,19 +12,19 @@ export default class Flights extends Component {
   showFlightTimesReturn(flight) {
     return (
       //initial flight (departure)
-      [<Text>{`${flight.depTime1.slice(11, 13)}:${flight.depTime1.slice(14, 16)} - ${flight.arrTime1.slice(11, 13)}:${flight.arrTime1.slice(14, 16)}  -  `}
-        {`   ${Math.floor(flight.duration1 / 60)}H ${flight.duration1 % 60}M`}</Text>,
+      [<Text>{`${flight.depTime1.slice(11, 13)}:${flight.depTime1.slice(14, 16)} - ${flight.arrTime1.slice(11, 13)}:${flight.arrTime1.slice(14, 16)}  |  `}
+        {`${Math.floor(flight.duration1 / 60)}H ${flight.duration1 % 60}M`}</Text>,
       //Return flight
-      <Text>{`${flight.depTime2.slice(11, 13)}:${flight.depTime2.slice(14, 16)} - ${flight.arrTime2.slice(11, 13)}:${flight.arrTime2.slice(14, 16)}  -  `}
-        {`   ${Math.floor(flight.duration2 / 60)}H ${flight.duration2 % 60}M`}</Text>
+    <Text>{`${flight.depTime2.slice(11, 13)}:${flight.depTime2.slice(14, 16)} - ${flight.arrTime2.slice(11, 13)}:${flight.arrTime2.slice(14, 16)}  |  `}
+        {`${Math.floor(flight.duration2 / 60)}H ${flight.duration2 % 60}M`}</Text>
       ]
     )
   }
-  
+
   showFlightTimesOneWay(flight) {
     return (
-      <Text>{`${flight.depTime.slice(11, 13)}:${flight.depTime.slice(14, 16)} - ${flight.arrTime.slice(11, 13)}:${flight.arrTime.slice(14, 16)}  -  `}
-        {`   ${Math.floor(flight.duration / 60)}H ${flight.duration % 60}M`}</Text>
+      <Text>{`${flight.depTime.slice(11, 13)}:${flight.depTime.slice(14, 16)} - ${flight.arrTime.slice(11, 13)}:${flight.arrTime.slice(14, 16)}  |  `}
+        {`${Math.floor(flight.duration / 60)}H ${flight.duration % 60}M`}</Text>
     )
   }
 
@@ -48,58 +48,45 @@ export default class Flights extends Component {
       .map((flight, i) => (
         //If it's a return flight
         (flight.airline1) ?
-          <Card key={i} title={`${flight.departure1} - ${flight.destination1}  |  ${flight.departure2} - ${flight.destination2} `}>
+          <Card key={i} title={`${flight.departure1} → ${flight.destination1}  |  ${flight.departure2} → ${flight.destination2} `} >
             {
               <View>
-                <View>
-                  <Text>DEPARTURE FLIGHT
-                  {this.showFlightTimesReturn(flight)[0]}
-                  </Text>
-                  <Text>
-                    {flight.airline1 + "  "}
-                    {`${flight.departure1} - ${flight.destination1}`}
-                  </Text>
+                <View style={{flexDirection: "row", justifyContent: "space-around" }}>
+                  <View>
+                    <Text style={{ fontWeight: "bold" }}>DEPARTURE FLIGHT{"\n"}</Text>
+                    <Text style={{ fontSize: 13 }}>{this.showFlightTimesReturn(flight)[0]}</Text>
+                    <Text style={{ fontSize: 13 }}>
+                      {flight.airline1}{"\n"}
+                    </Text>
+                  </View>
+                  <View>
+                    <Text style={{ fontWeight: "bold" }}>DEPARTURE FLIGHT{"\n"}</Text>
+                    <Text style={{ fontSize: 13 }}>{this.showFlightTimesReturn(flight)[0]}</Text>
+                    <Text style={{ fontSize: 13 }}>
+                      {flight.airline2}{"\n"}
+                    </Text>
+                  </View>
                 </View>
-                <View>
-                  <Text>RETURN FLIGHT
-                  {this.showFlightTimesReturn(flight)[1]}
-                  </Text>
-                  <Text>
-                    {flight.airline2 + "  "}
-                    {`${flight.departure2} - ${flight.destination2}`}
-                  </Text>
-                </View>
-                <Text>
-                  {`Price: ${flight.totalPrice}`}
+                <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                  {`Price: ${flight.totalPrice * this.props.passengers}`}
                 </Text>
               </View>
             }
           </Card>
           :
           //If it's a one way
-          <Card key={i} title={`${flight.departure} - ${flight.destination}`}>
+          <Card key={i} title={`${flight.departure} → ${flight.destination}`} style={{ flex: 1 }}>
             {
               <View>
                 <View>
-                  <Text>DEPARTURE FLIGHT
-                  {this.showFlightTimesOneWay(flight)[0]}
-                  </Text>
-                  <Text>
-                    {flight.airline + "  "}
-                    {`${flight.departure} - ${flight.destination}`}
+                  <Text style={{ fontWeight: "bold" }}>DEPARTURE FLIGHT{"\n"}</Text>
+                  <Text style={{ fontSize: 13 }}>{this.showFlightTimesOneWay(flight)}</Text>
+                  <Text style={{ fontSize: 13 }}>
+                    {flight.airline}
                   </Text>
                 </View>
-                <View>
-                  <Text>RETURN FLIGHT
-                  {this.showFlightTimesOneWay(flight)[1]}
-                  </Text>
-                  <Text>
-                    {flight.airline + "  "}
-                    {`${flight.departure} - ${flight.destination}`}
-                  </Text>
-                </View>
-                <Text>
-                  {`Price: ${flight.price}`}
+                <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                  {`Price: ${flight.price * this.props.passengers}`}
                 </Text>
               </View>
             }
@@ -114,14 +101,14 @@ export default class Flights extends Component {
         {
           (this.props.flights.length > 0) ? this.displayFlights()
             :
-            (this.props.state.loading) ? "Loading..." : "No flights found matching your criteria"
+            (this.props.state.loading) ? <Text>Loading...</Text> : <Text>No flights found matching your criteria</Text>
         }
         {(this.state.listMaxIndex < this.props.flights.length) ?
           <TouchableHighlight style={styles.button} onPress={this.findNextItems} underlayColor="white">
             <View>
               <Text>More flights</Text>
             </View>
-          </TouchableHighlight> : ""}
+          </TouchableHighlight> : <Text></Text>}
       </View>
     )
   }

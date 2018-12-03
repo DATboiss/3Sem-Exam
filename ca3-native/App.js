@@ -14,7 +14,7 @@ const Touchable = (props) => (
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { tripType: "returntrip", date1: undefined, date2: undefined, date: undefined}
+    this.state = { tripType: "returntrip", date1: undefined, date2: undefined, date: undefined }
   }
   onDataChanged = (name, value) => {
     this.setState({ [name]: value })
@@ -30,14 +30,21 @@ class HomeScreen extends React.Component {
     await this.setState({ tripType: name })
   }
 
-  static navigationOptions = { title: 'DATWays' }; //TODO CHANGE NAME
+  static navigationOptions = { 
+    title: 'DATWays',
+    headerStyle: {
+      backgroundColor: "#011E2F"
+    },
+    headerTitleStyle: {
+      color: "white"
+    } 
+  }; //TODO CHANGE NAME
+  
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: "#022C45" }}>
         <SearchParameter state={this.state} onDataChanged={this.onDataChanged} removeArrivalDate={this.removeArrivalDate} tripType={this.tripType} setTripType={this.setTripType} />
-        {/* <Touchable onPress={() => navigate('people')} title="Search flight" /> */}
-        
       </ScrollView>
     )
   }
@@ -55,10 +62,10 @@ export default App = () => <RouteStack />
 
 
 const styles = StyleSheet.create({
-  title: {
+  container: {
     textAlign: "center",
     fontSize: 55,
-    color: "black",
+    color: "#022C45",
     textShadowColor: 'rgba(255, 255, 0, 1)',
     textShadowOffset: { width: -0.75, height: 0.25 },
     textShadowRadius: 5,
