@@ -46,21 +46,11 @@ export default class Results extends Component {
     }
     render() {
         return (
-            <div>
-                <div id="resultBodyContainer">
-                    <div id="resultBodyLeft">
-                        <div id="sortContainer">
-                            <Filter onDataChanged={this.props.onDataChanged} state={this.props.state} filterList={this.filterList} tripType={this.props.tripType} />
-                        </div>
-                    </div>
-                    <div id="resultBodyRight">
-                        <div id="resultContainer">
-                            <OrderParameters compareBy={this.compareBy} tripType={this.props.tripType} />
-                            <ResultList state={this.state} flights={this.state.sortedFlights} compare={this.compare} setOrder={this.setOrder} compareBy={this.state.compareBy} tripType={this.props.tripType} />
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <>
+                <OrderParameters compareBy={this.compareBy} tripType={this.props.tripType} />
+                <ResultList state={this.state} flights={this.state.sortedFlights} compare={this.compare} setOrder={this.setOrder} compareBy={this.state.compareBy} tripType={this.props.tripType} />
+                <Filter onDataChanged={this.props.onDataChanged} state={this.props.state} filterList={this.filterList} tripType={this.props.tripType} />
+            </ >
 
 
         )
