@@ -1,0 +1,30 @@
+{
+  "devDependencies": {
+    "autoprefixer": "^9.3.1",
+    "browser-sync": "^2.26.3",
+    "cli-error-notifier": "^2.0.1",
+    "node-sass": "^4.10.0",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^5.1.2",
+    "postcss-clean": "^1.1.0",
+    "postcss-cli": "^6.0.1",
+    "postcss-reporter": "^6.0.0",
+    "stylelint": "^9.8.0"
+  },
+  "homepage": "https://inomoz.ru/",
+  "license": "MIT",
+  "name": "sp_outsourcing",
+  "scripts": {
+    "browsersync": "browser-sync start --files \"./template\" --server ./template --reload-delay=300 --reload-debounce=500",
+    "postcss:vendor": "onerror 'node-sass src/vendor.scss | postcss --no-map -u autoprefixer --autoprefixer.browsers \"last 4 Chrome versions, Edge >= 12, Firefox ESR, last 4 Safari versions, last 4 Opera versions, Explorer >= 10\" -u postcss-clean > ./template/css/vendor.min.css'",
+    "postcss:main": "onerror 'node-sass src/main.scss | postcss --no-map -u autoprefixer --autoprefixer.browsers \"last 4 Chrome versions, Edge >= 12, Firefox ESR, last 4 Safari versions, last 4 Opera versions, Explorer >= 10\"  -u postcss-clean  > ./template/css/main.min.css'",
+    "watch:all": "onchange 'src/**/*.scss' -e 'src/vendor.scss' -- npm run postcss:main",
+    "watch:vendor": "onchange 'src/_variables.scss src/vendor.scss ' -- npm run postcss:vendor",
+    "start": "npm-run-all postcss:* && npm-run-all -p watch:* browsersync"
+  },
+  "version": "1.0.0",
+  "description": "SP outsourcing template",
+  "dependencies": {
+    "spectre.css": "^0.5.6"
+  }
+}
