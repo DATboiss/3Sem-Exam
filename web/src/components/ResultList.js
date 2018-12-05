@@ -195,6 +195,7 @@ export default class ResultList extends Component {
     }
 
     render() {
+        // console.log(this.props.state);
         return (
             <ul>
                 {
