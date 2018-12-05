@@ -122,7 +122,6 @@ export default class SearchParameter extends Component {
 
   render() {
     return (<>
-      <>
         <div className="sp-sidebar off-canvas-sidebar" id="sidebar">
           <div className="sp-nav" data-simplebar="">
             {(this.props.state.tripType === "returntrip") ?
@@ -159,7 +158,6 @@ export default class SearchParameter extends Component {
             }
           </div>
         </div>
-      </>
       <div className="off-canvas-content">
         <div className="sp-content" id="content">
           <button className="s-title" id="oneway" onClick={this.props.setTripType}>One Way</button>
