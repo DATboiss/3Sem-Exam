@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
 // import './App.css';
 import './css/main.min.css';
 import './css/vendor.min.css';
+import './css/simplebar.css'
 import SearchParameters from './components/SearchParameters'
 import Filter from './components/Filter'
 
@@ -78,38 +79,7 @@ class App extends Component {
 const Home = (props) => {
   return (
     <>
-      <>
-        <div className="sp-sidebar off-canvas-sidebar" id="sidebar">
-          <div className="sp-nav" data-simplebar="">
-            {(props.state.tripType === "returntrip") ?
-              // <form onChange={this.props.onDataChanged} onMouseUp={this.props.filterList} >
-              //     <p>Price: </p>
-              //     <input name="totalPrice" type="range" min="100" max="3000" step="50" />
-              //     <p>{JSON.stringify(this.props.state.totalPrice)}</p>
-              // </form> 
-              <fieldset className="sp-fieldset">
-                <legend className="legend">Price</legend>
-                <ul className="menu menu-nav">
-                  <li className="menu-item">
-                    <div className="slider-item">
-                      <div className="val1">100 GBP</div>
-                      <div className="val2">15,000 GBP</div>
-                      <input className="range-slider tooltip" name="totalPrice" type="range" min="100" max="15000" onChange={props.onDataChanged} onMouseUp={props.filterList} data-toggle="price-slider" />
-                    </div>
-                  </li>
-                </ul>
-              </fieldset>
-              :
-              // <form onChange={this.props.onDataChanged} onMouseUp={this.props.filterList} step="50" >
-              //   <p>Price: </p>
-              //   <input name="price" type="range" min="100" max="3000" step="50" />
-              //   {/* <p>{JSON.stringify(this.props.state.price)}</p> */}
-              // </form>
-              ""
-            }
-          </div>
-        </div>
-      </>
+
       <SearchParameters state={props.state} onDataChanged={props.onDataChanged} removeArrivalDate={props.removeArrivalDate} tripType={props.tripType} setTripType={props.setTripType} />
     </>
   );

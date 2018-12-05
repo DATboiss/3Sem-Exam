@@ -84,7 +84,7 @@ export default class SearchParameter extends Component {
                   </div>
                 </div>
               </div>
-            </div> 
+            </div>
             :
             ""
           }
@@ -121,11 +121,49 @@ export default class SearchParameter extends Component {
   }
 
   render() {
-    return (
+    return (<>
+      <>
+        <div className="sp-sidebar off-canvas-sidebar" id="sidebar">
+          <div className="sp-nav" data-simplebar="">
+            {(this.props.state.tripType === "returntrip") ?
+              // <form onChange={this.props.onDataChanged} onMouseUp={this.props.filterList} >
+              //     <p>Price: </p>
+              //     <input name="totalPrice" type="range" min="100" max="3000" step="50" />
+              //     <p>{JSON.stringify(this.props.state.totalPrice)}</p>
+              // </form> 
+              <fieldset className="sp-fieldset">
+                <legend className="legend">Price</legend>
+                <ul className="menu menu-nav">
+                  <li className="menu-item">
+                    <div className="slider-item">
+                      <div className="val1">100 GBP</div>
+                      <div className="val2">15,000 GBP</div>
+                      <input className="range-slider tooltip" name="totalPrice" type="range" min="100" max="15000" onChange={this.props.onDataChanged} onMouseUp={this.props.filterList} data-toggle="price-slider" />
+                    </div>
+                  </li>
+                </ul>
+              </fieldset>
+              :
+              <fieldset className="sp-fieldset">
+                <legend className="legend">Price</legend>
+                <ul className="menu menu-nav">
+                  <li className="menu-item">
+                    <div className="slider-item">
+                      <div className="val1">100 GBP</div>
+                      <div className="val2">15,000 GBP</div>
+                      <input className="range-slider tooltip" name="price" type="range" min="100" max="15000" onChange={this.props.onDataChanged} onMouseUp={this.props.filterList} data-toggle="price-slider" />
+                    </div>
+                  </li>
+                </ul>
+              </fieldset>
+            }
+          </div>
+        </div>
+      </>
       <div className="off-canvas-content">
         <div className="sp-content" id="content">
-          <button id="oneway" onClick={this.props.setTripType}>One Way</button>
-          <button id="returntrip" onClick={this.props.setTripType}>Return Trip</button>
+          <button className="s-title" id="oneway" onClick={this.props.setTripType}>One Way</button>
+          <button className="s-title" id="returntrip" onClick={this.props.setTripType}>Return Trip</button>
           {this.showSearchParams()}
 
           {
@@ -133,6 +171,7 @@ export default class SearchParameter extends Component {
           }
         </div>
       </div>
+    </>
     )
   }
 }
