@@ -38,12 +38,20 @@ public class OneWayFuture
                 OneWayDTO[] routes = GSON.fromJson(future.get(), OneWayDTO[].class);
                 for (OneWayDTO route : routes)
                 {
+                    String[] debParts = route.getDeparture().split(",");
+                    String[] destParts = route.getDestination().split(",");
+                    if (debParts.length > 1) {
+                        route.setDeparture(debParts[1].trim());
+                        route.setDestination(destParts[1].trim());
+                    }
                     routeList.add(route);
                 }
             }
 
             executor.shutdown();
-
+            
+            System.out.println(routeList);
+            
             List<OneWayDTO> filteredRouteList = routeList.stream()
                     .filter(route -> route.getDeparture().equals(departure) && route.getDestination().equals(destination) && route.getDepTime().substring(0, 10).equals(date))
                     .collect(Collectors.toList());

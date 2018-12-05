@@ -17,28 +17,29 @@ import java.util.stream.Collectors;
  *
  * @author anders
  */
-public class ReturnFuture
-{
+public class ReturnFuture {
 
     private List<Future<String>> routeFutures = new ArrayList();
     private List<OneWayDTO> routeList = new ArrayList();
     private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final List<String> airlineURLs = AirlineURLs.getAirlineURLs();
 
-    public String routeFetcher(String departure, String destination, String date1, String date2) throws InterruptedException, ExecutionException
-    {
-        try
-        {
+    public String routeFetcher(String departure, String destination, String date1, String date2) throws InterruptedException, ExecutionException {
+        try {
 
             ExecutorService executor = Executors.newFixedThreadPool(3);
 
-            for (String url : airlineURLs)
-            {
+            for (String url : airlineURLs) {
                 RouteCallable callable = new RouteCallable(url);
                 Future<String> future = executor.submit(callable);
                 OneWayDTO[] routes = GSON.fromJson(future.get(), OneWayDTO[].class);
-                for (OneWayDTO route : routes)
-                {
+                for (OneWayDTO route : routes) {
+                    String[] debParts = route.getDeparture().split(",");
+                    String[] destParts = route.getDestination().split(",");
+                    if (debParts.length > 1) {
+                        route.setDeparture(debParts[1].trim());
+                        route.setDestination(destParts[1].trim());
+                    }
                     routeList.add(route);
                 }
             }
@@ -54,10 +55,8 @@ public class ReturnFuture
                     .collect(Collectors.toList());
 
             List<ReturnDTO> returnRoutes = new ArrayList();
-            for (int i = 0; i < filteredRouteList1.size(); i++)
-            {
-                for (int j = 0; j < filteredRouteList2.size(); j++)
-                {
+            for (int i = 0; i < filteredRouteList1.size(); i++) {
+                for (int j = 0; j < filteredRouteList2.size(); j++) {
                     returnRoutes.add(new ReturnDTO(filteredRouteList1.get(i), filteredRouteList2.get(j)));
                 }
 
@@ -66,8 +65,7 @@ public class ReturnFuture
             Collections.sort(returnRoutes);
 
             return GSON.toJson(returnRoutes);
-        } catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }

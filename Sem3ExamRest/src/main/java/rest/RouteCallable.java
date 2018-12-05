@@ -41,6 +41,7 @@ public class RouteCallable implements Callable<String> {
             jsonStr += scan.nextLine();
         }
         scan.close();
+        System.out.println("jsonstr" + jsonStr);
         return jsonStr;
     }
 }

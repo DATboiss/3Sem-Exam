@@ -8,8 +8,8 @@ public class OneWayDTO implements Comparable<OneWayDTO>
 {
 
     private final String airline;
-    private final String departure;
-    private final String destination;
+    private String departure;
+    private String destination;
     private final String depTime;
     private final String arrTime;
     private final int duration;
@@ -88,6 +88,17 @@ public class OneWayDTO implements Comparable<OneWayDTO>
     {
         return capacity;
     }
+
+    public void setDeparture(String departure) {
+        this.departure = departure;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+    
+    
+    
 
     @Override
     public String toString()

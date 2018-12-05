@@ -10,8 +10,8 @@ public class ReturnDTO implements Comparable<ReturnDTO>
 {
 
     private final String airline1;
-    private final String departure1;
-    private final String destination1;
+    private String departure1;
+    private String destination1;
     private final String depTime1;
     private final String arrTime1;
     private final int duration1;
@@ -21,8 +21,8 @@ public class ReturnDTO implements Comparable<ReturnDTO>
     private final String model1;
     private final String capacity1;
     private final String airline2;
-    private final String departure2;
-    private final String destination2;
+    private String departure2;
+    private String destination2;
     private final String depTime2;
     private final String arrTime2;
     private final int duration2;
