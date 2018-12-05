@@ -12,7 +12,7 @@ public class AirlineURLs
 
     private static List<String> airlineURLs = new ArrayList();
     private static final String url1 = "https://emilvh.dk/DATFlights/api/flights";
-    private static final String url2 = "https://emilvh.dk/DATFlights/api/flights";
+    private static final String url2 = "https://stephandjurhuus.com/travel/api/flights";
     private static final String url3 = "https://emilvh.dk/DATFlights/api/flights";
 
     public static List<String> getAirlineURLs()
