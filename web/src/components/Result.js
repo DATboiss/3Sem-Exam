@@ -10,16 +10,11 @@ export default class Results extends Component {
         this.state = {
             orderBy: "asc",
             compareBy: (this.props.tripType === "returntrip") ? "totalPrice" : "price",
-            sortedFlights: this.props.flights,
             flights: this.props.flights
         };
     }
 
-    filterList = (e) => {
-        e.preventDefault();
-        const flights = this.props.flights.filter(flight => flight[e.target.name] <= e.target.value);
-        this.setState({ sortedFlights: flights })
-    }
+
 
     compare = (a, b, orderBy) => {
         if (orderBy === "asc")
@@ -48,7 +43,7 @@ export default class Results extends Component {
         return (
             <>
                 <OrderParameters compareBy={this.compareBy} tripType={this.props.tripType} />
-                <ResultList state={this.state} flights={this.state.sortedFlights} compare={this.compare} setOrder={this.setOrder} compareBy={this.state.compareBy} tripType={this.props.tripType} />
+                <ResultList state={this.state} flights={this.props.sortedFlights} compare={this.compare} setOrder={this.setOrder} compareBy={this.state.compareBy} tripType={this.props.tripType} sortedFlights={this.props.sortedFlights} />
                 <Filter onDataChanged={this.props.onDataChanged} state={this.props.state} filterList={this.filterList} tripType={this.props.tripType} />
             </ >
 

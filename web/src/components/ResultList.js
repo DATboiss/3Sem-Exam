@@ -40,12 +40,12 @@ export default class ResultList extends Component {
 
   displayFlights(compareBy) {
     const flights = this.props.flights
-      // .sort((cur, next) => this.props.compare(cur[compareBy], next[compareBy], this.props.state.orderBy))
-      // .slice(0, this.state.listMaxIndex)
+      .sort((cur, next) => this.props.compare(cur[compareBy], next[compareBy], this.props.state.orderBy))
+      .slice(0, this.state.listMaxIndex)
       .map((flight, i) => (
         //If it's a return flight
         (flight.airline1) ?
-          <div className="card">
+          <div className="card" key={i}>
             <div className="card-header">
               <div className="card-title">{`${flight.departure1} → ${flight.destination1} | ${flight.departure2} → ${flight.destination2}`}</div>
             </div>
@@ -91,17 +91,12 @@ export default class ResultList extends Component {
                 <div className="column col-3 col-xs-12 col-sm-12 is-actions">
                   <div className="columns">
                     <div className="column col-12 col-xs-6 col-sm-4 is-data is-price">
-                      <a className="heading" href="#" data-toggle="trip-favorite">Add to trip <svg className="icon icon-heart"><use xlinkHref="#icon-heart"></use></svg></a>
+                      <a className="heading" href="https://www.emilvh.dk/DATWaysDummyPage/" data-toggle="trip-favorite">Add to trip <svg className="icon icon-heart"><use xlinkHref="#icon-heart"></use></svg></a>
                       <div className="h3">{flight.totalPrice} <small>DKK</small></div>
                     </div>
                     <div className="column col-12 col-xs-6 col-sm-8 is-action">
                       <div className="dropdown is-wide">
-                        <div className="btn-group btn-group-block"><a className="btn btn-success">View deal</a><a className="btn btn-success dropdown-toggle" tabindex="0"><i className="icon icon-caret"></i></a>
-                          {/* <ul class="menu text-left">
-                                    <li class="menu-item"><a href="#dropdowns">Slack</a></li>
-                                    <li class="menu-item"><a href="#dropdowns">Hipchat</a></li>
-                                    <li class="menu-item"><a href="#dropdowns">Skype</a></li>
-                                  </ul> */}
+                        <div className="btn-group btn-group-block"><a className="btn btn-success" href="https://www.emilvh.dk/DATWaysDummyPage/">View deal</a><a className="btn btn-success dropdown-toggle" tabIndex="0" href="https://www.emilvh.dk/DATWaysDummyPage/"><i className="icon icon-caret"></i></a>
                         </div>
                       </div>
                     </div>
@@ -111,7 +106,7 @@ export default class ResultList extends Component {
             </div>
           </div>
           :
-          <div className="card">
+          <div className="card" key={i}>
             <div className="card-header">
               <div className="card-title">{`${flight.departure} → ${flight.destination}`}</div>
             </div>
@@ -140,20 +135,13 @@ export default class ResultList extends Component {
                 <div className="column col-3 col-xs-12 col-sm-12 is-actions">
                   <div className="columns">
                     <div className="column col-12 col-xs-6 col-sm-4 is-data is-price">
-                      <a className="heading" href="#" data-toggle="trip-favorite">Add to trip <svg class="icon icon-heart"><use xlinkHref="#icon-heart"></use></svg></a>
+                      <a className="heading" href="https://www.emilvh.dk/DATWaysDummyPage/" data-toggle="trip-favorite">Add to trip <svg className="icon icon-heart"><use xlinkHref="#icon-heart"></use></svg></a>
                       <div className="h3">{flight.price} <small>DKK</small></div>
                     </div>
                     <div className="column col-12 col-xs-6 col-sm-8 is-action">
                       <div className="dropdown is-wide">
                         <div className="btn-group btn-group-block">
-                        <a className="btn btn-success">View deal</a>
-                        <a className="btn btn-success dropdown-toggle" tabindex="0"/>
-                        {/* <i className="icon icon-caret"></i></a> */}
-                          {/* <ul class="menu text-left">
-                                  <li class="menu-item"><a href="#dropdowns">Slack</a></li>
-                                  <li class="menu-item"><a href="#dropdowns">Hipchat</a></li>
-                                  <li class="menu-item"><a href="#dropdowns">Skype</a></li>
-                                </ul> */}
+                        <a className="btn btn-success" href="https://www.emilvh.dk/DATWaysDummyPage/">View deal</a>
                         </div>
                       </div>
                     </div>
@@ -162,34 +150,19 @@ export default class ResultList extends Component {
               </div>
             </div>
           </div>
-        //If it's a one way
-        // <div id="result" key={i}>
-        //     <div id="takeoff">
-        //         <p>DEPARTURE FLIGHT</p>
-        //         {this.showFlightTimesOneWay(flight)}
-        //         <p>
-        //             {flight.airline + "  "}
-        //             {`${flight.departure} - ${flight.destination}`}
-        //         </p>
-        //     </div>
-        //     <div id="price">
-        //         {`Price: ${flight.price}`}
-        //     </div>
-        // </div>
       ));
     return flights;
   }
 
   render() {
-    // console.log(this.props.state);
     return (
       <ul>
         {
-          (this.props.state.sortedFlights.length > 0) ? this.displayFlights(this.props.compareBy)
+          (this.props.sortedFlights.length > 0) ? this.displayFlights(this.props.compareBy)
             :
-            (this.props.state.loading) ? "Loading..." : "No flights found matching your criteria"
+            (this.props.state.loading) ? "Loading..." : <span style={{color: "red"}}>No flights found matching your criteria</span>
         }
-        {(this.state.listMaxIndex < this.props.flights.length) ? <button onClick={this.findNextItems}>load more</button> : ""}
+        {(this.state.listMaxIndex < this.props.flights.length) ? <button className="btn btn-primary btn-lg col-12" onClick={this.findNextItems}>load more</button> : ""}
       </ul >
     )
   }
