@@ -50,6 +50,15 @@ class HomeScreen extends React.Component {
   }
 }
 
+// <<<<<<< HEAD
+// onDataChanged = (e) => {
+//   if (e)
+//     this.setState({ [e.target.name]: e.target.value })
+// }
+
+// export default App = () => <RouteStack style={{ marginTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight / 2 }} />
+// =======
+// >>>>>>> react_native
 
 const RouteStack = createStackNavigator({
   Home: { screen: HomeScreen },
