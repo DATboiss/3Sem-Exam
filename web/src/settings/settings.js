@@ -9,12 +9,15 @@ export default class settings extends React.Component  {
         return `https://sebastianlundsgaard.dk/ExamSem3Rest/api/flights/return?departure=${departure}&destination=${destination}&date1=${deptDate}&date2=${returnDate}`
     }
     getUserURL() {
-        return "http://localhost:8080/swapi/api/info/user/"
+        return "http://localhost:8080/api/client/user/"
     }
     getAdminURL() {
-        return "http://localhost:8080/swapi/api/info/admin/"
+        return "http://localhost:8080/api/client/admin/"
     }
-    getAllPersonsURL(){
-        return "http://localhost:8080/swapi/api/info/sw/87"
+    getLoginURL() {
+        return "http://localhost:8080/api/login"
+    }
+    getRegisterURL(){
+        return "http://localhost:8080/api/register"
     }
 }

@@ -55,11 +55,11 @@ public class Flights {
     public Response test() {
         return Response.status(Response.Status.ACCEPTED).entity("Hej det virker").build();
     }
-    @GET
-    @Path("create")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createSchema() throws ParseException {
-        SchemaBuilder.createSchema();
-        return Response.status(Response.Status.ACCEPTED).entity("Hej det virker").build();
-    }
+//    @GET
+//    @Path("create")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response createSchema() throws ParseException {
+//        SchemaBuilder.generate();
+//        return Response.status(Response.Status.ACCEPTED).entity("Generated").build();
+//    }
 }

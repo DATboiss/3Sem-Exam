@@ -46,6 +46,7 @@ public class LoginEndpoint {
       JsonObject responseJson = new JsonObject();
       responseJson.addProperty("username", username);
       responseJson.addProperty("token", token);
+        System.out.println(responseJson);
       return Response.ok(new Gson().toJson(responseJson)).build();
 
     } catch (Exception ex) {
@@ -65,7 +66,7 @@ public class LoginEndpoint {
       res.append(",");
     }
     String rolesAsString = res.length() > 0 ? res.substring(0, res.length() - 1) : "";
-    String issuer = "semesterdemo_security_course";
+    String issuer = "DATBoi$, CPH-Business, Lyngby";
 
     JWSSigner signer = new MACSigner(SharedSecret.getSharedKey());
     Date date = new Date();

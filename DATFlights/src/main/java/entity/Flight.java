@@ -155,4 +155,11 @@ public class Flight implements Serializable {
         this.capacity = capacity;
     }
 
+    @Override
+    public String toString() {
+        return "Flight{" + "id=" + id + ", airline=" + airline + ", departure=" + departure + ", destination=" + destination + ", depTime=" + depTime + ", arrTime=" + arrTime + ", duration=" + duration + ", price=" + price + ", cancelInsurance=" + cancelInsurance + ", airplane=" + airplane + ", model=" + model + ", capacity=" + capacity + '}';
+    }
+    
+    
+
 }

@@ -1,6 +1,7 @@
 body {
   text-align: center;
   background-color: #3963b1;
+  color: white;
 }
 #resultBodyContainer {
   display: flex;
@@ -58,6 +59,27 @@ body {
   height: 200px;
   width: 200px;
 }
+
+.profileContainer {
+  display: flex;
+  justify-content: center;
+}
+.profileInformation li {
+  text-align: left;
+  width: 400px;
+}
+.licontainer{
+  display: inline-block;
+}
+.profileInformation span {
+  padding: 1%;
+}
+
+.profileTitle {
+  font-weight: 900;
+}
+
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
