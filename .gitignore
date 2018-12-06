@@ -104,3 +104,6 @@
 **/hs_err_pid*
 **/target/**
 
+DATWaysDummyPage/src/main/webapp/index.html
+DATWaysDummyPage/pom.xml
+DATWaysDummyPage/nb-configuration.xml
