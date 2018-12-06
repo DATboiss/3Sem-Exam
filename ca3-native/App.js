@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, View, Platform, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, Platform, TouchableOpacity, StyleSheet, ScrollView, TouchableHighlight } from 'react-native';
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { createStackNavigator } from 'react-navigation';
 import FlightList from './screens/FlightList'
-import SearchParameter from './Components/SearchParameters'
+import SearchParameter from './components/SearchParameters'
+import FilterOrderButton from './components/FilterOrderButton'
 
 
 const Touchable = (props) => (
@@ -14,8 +15,15 @@ const Touchable = (props) => (
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { tripType: "returntrip", date1: undefined, date2: undefined, date: undefined}
+    this.state = { tripType: "returntrip", date1: undefined, date2: undefined, date: undefined, resultsMounted: true,
+    hideAll: false, hideButton: true, buttonFlex: 0.25, 
+    compareBy: "price",
+    orderBy: "asc",
+    flights: [],
+    sortedFlights: [],
   }
+  }
+
   onDataChanged = (name, value) => {
     this.setState({ [name]: value })
   }
@@ -30,28 +38,76 @@ class HomeScreen extends React.Component {
     await this.setState({ tripType: name })
   }
 
+  setResultsMounted = (bool) => {
+    this.setState({resultsMounted: bool})
+  }
+
+  setFlights = async (flights) => {
+    await this.setState({flights: flights});
+    await this.setState({sortedFlights: flights});
+    console.log("App - setFlights - flights: " + flights + " and state.flights " + this.state.flights);
+  }
+
+  setSortedFlights = async (sortedflights) => {
+    await this.setState({sortedFlights: sortedflights});
+  }
+
+  changeHideAll = () => {
+    this.setState({hideAll: !this.state.hideAll});
+    (this.state.buttonFlex === 0.25) ? this.setState({buttonFlex: 1}) : this.setState({buttonFlex: 0.25});
+    console.log("App - changeHideAll - state.flights: " + this.state.flights);
+  }
+  
+  changeHideButton = () => {
+    this.setState({hideButton: !this.state.hideButton})
+  }
+
+  changeCompareBy = (name) => {
+    this.setState({compareBy: name});
+    console.log("changeCompareBy in App: " + this.state.compareBy);
+  }
+
   static navigationOptions = { title: 'DATWays' }; //TODO CHANGE NAME
-  render() {
+  render = () => {
     const { navigate } = this.props.navigation;
     return (
-      <ScrollView>
-        <SearchParameter state={this.state} onDataChanged={this.onDataChanged} removeArrivalDate={this.removeArrivalDate} tripType={this.tripType} setTripType={this.setTripType} />
-        {/* <Touchable onPress={() => navigate('people')} title="Search flight" /> */}
-        
-      </ScrollView>
+      <>
+        <View style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}>
+        {(!this.state.hideAll) ? 
+        <ScrollView style={{ zIndex: 0, flex: 1, flexDirection: "column" }}>
+            <SearchParameter 
+            state={this.state} 
+            flights={this.state.sortedFlights} 
+            setFlights={this.setFlights} 
+            setSortedFlights={this.setSortedFlights} 
+            onDataChanged={this.onDataChanged} 
+            removeReturnDate={this.removeReturnDate} 
+            tripType={this.tripType} 
+            setTripType={this.setTripType} 
+            changeHideButton={this.changeHideButton}
+            resultsMounted={this.state.resultsMounted}
+            setResultsMounted={this.setResultsMounted}
+            compareBy={this.state.compareBy}
+            />
+
+          </ScrollView> : null}
+          {(!this.state.hideButton) ? 
+          <View style={{flex: this.state.buttonFlex, flexDirection: "row", height: 1, backgroundColor: "transparent"}} >
+            <FilterOrderButton 
+            state={this.state} 
+            tripType={this.props.tripType} 
+            changeHideAll={this.changeHideAll} 
+            changeCompareBy={this.changeCompareBy}
+            />
+          </View> :
+        <Text></Text>}
+          
+        </View>
+      </>
     )
   }
 }
 
-// <<<<<<< HEAD
-// onDataChanged = (e) => {
-//   if (e)
-//     this.setState({ [e.target.name]: e.target.value })
-// }
-
-// export default App = () => <RouteStack style={{ marginTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight / 2 }} />
-// =======
-// >>>>>>> react_native
 
 const RouteStack = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -60,6 +116,7 @@ const RouteStack = createStackNavigator({
 
 });
 
+// export default App = () => <RouteStack style={{ marginTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight / 2 }} />
 export default App = () => <RouteStack />
 
 

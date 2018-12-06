@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { AppRegistry, Text, TextInput, StyleSheet, View, TouchableHighlight } from 'react-native';
 import Filter from './Filter';
 import OrderParameters from './OrderParameters';
-import ResultList from './ResultList'
+import FlightList from '../screens/FlightList'
 
 
 export default class Results extends Component {
@@ -15,9 +16,10 @@ export default class Results extends Component {
         };
     }
 
-    filterList = (e) => {
+    filterList = (name, value) => {
+        console.log("Result filterList method: name: " + name + " value: " + value);
         e.preventDefault();
-        const flights = this.props.flights.filter(flight => flight[e.target.name] <= e.target.value);
+        const flights = this.props.flights.filter(flight => flight[name] <= value);
         this.setState({ sortedFlights: flights })
     }
 
@@ -29,9 +31,9 @@ export default class Results extends Component {
     }
 
     compareBy = (e) => {
-        this.setOrder(e.target.name);
+        this.setOrder(e);
         this.setState({
-            compareBy: e.target.name
+            compareBy: e
         })
     }
 
@@ -44,24 +46,20 @@ export default class Results extends Component {
         }
         return orderBy;
     }
-    render() {
-        return (
-            <div>
-                <div id="resultBodyContainer">
-                    <div id="resultBodyLeft">
-                        <div id="sortContainer">
-                            <Filter onDataChanged={this.props.onDataChanged} state={this.props.state} filterList={this.filterList} tripType={this.props.tripType} />
-                        </div>
-                    </div>
-                    <div id="resultBodyRight">
-                        <div id="resultContainer">
-                            <OrderParameters compareBy={this.compareBy} tripType={this.props.tripType} />
-                            <ResultList state={this.state} flights={this.state.sortedFlights} compare={this.compare} setOrder={this.setOrder} compareBy={this.state.compareBy} tripType={this.props.tripType} />
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+
+
+    render = () => {
+        console.log("Result " + this.state.flights);
+        return (
+            <>
+                <View >
+                    {/* <Filter onDataChanged={this.props.onDataChanged} state={this.props.state} filterList={this.filterList} tripType={this.props.tripType} /> */}
+                    {/* <OrderParameters compareBy={this.compareBy} tripType={this.props.tripType} /> */}
+                    <FlightList state={this.state} flights={this.props.flights} compare={this.compare} setOrder={this.setOrder} compareBy={this.compareBy} tripType={this.props.tripType} />
+                    
+                </View>
+            </>
 
         )
     }

@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, StyleSheet, View, TouchableHighlight } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import dataFacade from '../dataFacade'
-import FlightList from '../screens/FlightList'
+import Result from './Result';
 
 
 export default class SearchParameter extends Component {
     constructor(props) {
         super(props);
-        this.state = { tripType: "returntrip", resultsMounted: true, searched: false };
+        this.state = { tripType: "returntrip", searched: false, 
+    };
     }
 
     setTripType = (e) => {
@@ -20,24 +21,33 @@ export default class SearchParameter extends Component {
 
     fetchFlights = async (e) => {
         e.preventDefault();
-        this.setState({ resultsMounted: true, searched: true })
+        this.setState({searched: true })
+        this.props.setResultsMounted(true);
         const { departure, destination, date1, date2, date } = this.props.state;
         if (this.props.state.tripType === "returntrip") {
             const flights = await dataFacade.getReturnRoutes(departure, destination, date1, date2)
-            this.setState({ flights: flights, resultsMounted: false, searched: false })
+            this.setState({ searched: false });
+            this.props.setResultsMounted(false);
+            this.props.setFlights(flights);
+            console.log("fetchFlights " + this.props.resultsMounted);
         }
         else {
             const flights = await dataFacade.getOneWayRoutes(departure, destination, date)
-            this.setState({ flights: flights, resultsMounted: false, searched: false })
+            this.setState({ searched: false })
+            this.props.setResultsMounted(false);
+            this.props.setFlights(flights);
+            console.log("fetchFlights " + this.props.resultsMounted);
         }
-        
+        this.props.changeHideButton();
+
     }
+
 
     returnTrip() {
         return (
             <>
-                <TextInput type="text" name="departure" placeholder="Departure" onChangeText={(e) => this.props.onDataChanged("departure", e)} />
-                <TextInput type="text" name="destinati" placeholder="Destination" onChangeText={(e) => this.props.onDataChanged("destination", e)} />
+                <TextInput type="text" name="departure" placeholder="Departure" autoCapitalize="characters" onChangeText={(e) => this.props.onDataChanged("departure", e)} />
+                <TextInput type="text" name="destinati" placeholder="Destination" autoCapitalize="characters" onChangeText={(e) => this.props.onDataChanged("destination", e)} />
                 <DatePicker style={{ width: 200 }}
                     date={this.props.state.date1}
                     mode="date"
@@ -92,8 +102,8 @@ export default class SearchParameter extends Component {
     oneWayTrip() {
         return (
             <>
-                <TextInput type="text" name="departure" placeholder="Departure" onChangeText={(e) => this.props.onDataChanged("departure", e)} />
-                <TextInput type="text" name="destination" placeholder="Destination" onChangeText={(e) => this.props.onDataChanged("destination", e)} />
+                <TextInput type="text" name="departure" placeholder="Departure" autoCapitalize="characters" onChangeText={(e) => this.props.onDataChanged("departure", e)} />
+                <TextInput type="text" name="destination" placeholder="Destination" autoCapitalize="characters" onChangeText={(e) => this.props.onDataChanged("destination", e)} />
                 <DatePicker style={{ width: 200 }}
                     date={this.props.state.date}
                     mode="date"
@@ -126,7 +136,7 @@ export default class SearchParameter extends Component {
         );
     }
 
-    render() {
+    render = () => {
         return (
             <View>
                 <TouchableHighlight style={styles.button} id="oneway" onPress={() => this.props.setTripType("oneway")} underlayColor="white">
@@ -143,7 +153,7 @@ export default class SearchParameter extends Component {
                     (this.props.state.tripType === "returntrip") ? this.returnTrip() : this.oneWayTrip()
                 }
                 {
-                    (this.state.resultsMounted) ? (this.state.searched) ? <Text>Loading...</Text> : <Text> </Text> : <FlightList state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.state.tripType} />
+                    (this.props.resultsMounted) ? (this.state.searched) ? <Text>Loading...</Text> : <Text> </Text> : <Result state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.props.flights} changeFlights={this.props.changeFlights} changeSortedFlights={this.props.changeSortedFlights} tripType={this.state.tripType} compareBy={this.props.compareBy}/>
                 }
             </View>
         )

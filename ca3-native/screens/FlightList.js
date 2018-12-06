@@ -42,8 +42,9 @@ export default class Flights extends Component {
     }
   }
 
-  displayFlights() {
+  displayFlights(compareBy) {
     const flights = this.props.flights
+    .sort((cur, next) => this.props.compare(cur[compareBy], next[compareBy], this.props.state.orderBy))
       .slice(0, this.state.listMaxIndex)
       .map((flight, i) => (
         //If it's a return flight
@@ -82,25 +83,13 @@ export default class Flights extends Component {
               <View>
                 <View>
                   <Text>DEPARTURE FLIGHT
-                  {this.showFlightTimesOneWay(flight)[0]}
+                  {this.showFlightTimesOneWay(flight)}
                   </Text>
                   <Text>
                     {flight.airline + "  "}
                     {`${flight.departure} - ${flight.destination}`}
                   </Text>
                 </View>
-                <View>
-                  <Text>RETURN FLIGHT
-                  {this.showFlightTimesOneWay(flight)[1]}
-                  </Text>
-                  <Text>
-                    {flight.airline + "  "}
-                    {`${flight.departure} - ${flight.destination}`}
-                  </Text>
-                </View>
-                <Text>
-                  {`Price: ${flight.price}`}
-                </Text>
               </View>
             }
           </Card>
@@ -108,20 +97,20 @@ export default class Flights extends Component {
     return flights;
   }
 
-  render() {
+  render = () => {
     return (
-      <View>
+      <View >
         {
-          (this.props.flights.length > 0) ? this.displayFlights()
+          (this.props.flights.length > 0) ? this.displayFlights(this.props.compareBy)
             :
-            (this.props.state.loading) ? "Loading..." : "No flights found matching your criteria"
+            (this.props.state.loading) ? <Text>Loading...</Text> : <Text>No flights found matching your criteria</Text>
         }
         {(this.state.listMaxIndex < this.props.flights.length) ?
           <TouchableHighlight style={styles.button} onPress={this.findNextItems} underlayColor="white">
             <View>
               <Text>More flights</Text>
             </View>
-          </TouchableHighlight> : ""}
+          </TouchableHighlight> : <Text></Text>}
       </View>
     )
   }
