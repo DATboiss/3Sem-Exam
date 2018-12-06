@@ -59,7 +59,7 @@ class HomeScreen extends React.Component {
   }
   
   changeHideButton = () => {
-    this.setState({hideButton: !this.state.hideButton})
+    this.setState({hideButton: false})
   }
 
   changeCompareBy = (name) => {

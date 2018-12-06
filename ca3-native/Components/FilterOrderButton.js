@@ -23,7 +23,6 @@ export default class FilterOrderButton extends Component {
   Actions = (state, props) => {
     //the slider
     return ([{
-      key: 0,
       text: 'MaxPrice',
       name: 'bt_maxPrice',
       position: 1,
@@ -47,7 +46,6 @@ export default class FilterOrderButton extends Component {
       }
 
     }, {
-      key: 1,
       text: 'MaxDuration',
       name: 'bt_maxDuration',
       position: 2,
@@ -71,12 +69,10 @@ export default class FilterOrderButton extends Component {
       }
 
     }, {
-      key: 2,
       text: 'Order By Price',
       name: 'price',
       position: 3
     }, {
-      key: 3,
       text: 'Order By Duration',
       name: 'duration',
       position: 4
