@@ -3,7 +3,7 @@ import { Text, View, Platform, TouchableOpacity, StyleSheet, ScrollView } from '
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { createStackNavigator } from 'react-navigation';
 import FlightList from './screens/FlightList'
-import SearchParameter from './Components/SearchParameters'
+import SearchParameter from './components/SearchParameters'
 
 
 const Touchable = (props) => (
