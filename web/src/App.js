@@ -93,12 +93,12 @@ class App extends Component {
         const flights = await dataFacade.getOneWayRoutes(departureLoc.toUpperCase(), arrivalLoc.toUpperCase(), dateDeparture)
         this.setState({ flights: flights, sortedFlights: flights, resultsMounted: false, searched: false })
       }
-    } 
+    }
   }
 
   filterList = (e) => {
     e.preventDefault();
-    if ( this.state.flights) {
+    if (this.state.flights) {
       const flights = this.state.flights.filter(flight => flight[e.target.name] <= e.target.value);
       this.setState({ sortedFlights: flights })
     }
@@ -233,9 +233,13 @@ const Header = (props) => (
         <section className="navbar-section">
           {(props.loggedIn) ? <><Link className="btn btn-outline-primary col-ml-auto" to='/Login'>{(props.username)}</Link>
             <Link to="/" className="btn btn-primary btn-lg col-2" onClick={props.logout}>Logout</Link> </>
-            : <Link className="btn btn-outline-primary col-ml-auto" to='/login'>
+            : <><Link className="btn btn-primary btn-lg col-2" to='/login'>
               <svg className="icon icon-log-in"><use xlinkHref="#icon-log-in"></use></svg> Login
-  </Link>}
+  </Link>
+            <Link className="btn btn-primary btn-lg col-2" to='/register'>
+              <svg className="icon icon-log-in"><use xlinkHref="#icon-log-in"></use></svg> Register
+</Link></>
+}
         </section>
       </header>
     </div>
