@@ -2,36 +2,35 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, StyleSheet, View, TouchableHighlight } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import dataFacade from '../dataFacade'
-import FlightList from '../screens/FlightList'
+import Result from './Result';
 
 
 export default class SearchParameter extends Component {
     constructor(props) {
         super(props);
-        this.state = { tripType: "returntrip", resultsMounted: true, searched: false };
-    }
-
-    setTripType = (e) => {
-        if (e.target.id === "oneway") {
-            this.props.removeReturnDate();
-        }
-        this.setState({ tripType: e.target.id })
+        this.state = { searched: false, 
+    };
     }
 
     fetchFlights = async (e) => {
         e.preventDefault();
-        this.setState({ resultsMounted: true, searched: true })
+        this.setState({searched: true })
+        this.props.setResultsMounted(true);
         const { departure, destination, date1, date2, date } = this.props.state;
-        if (this.props.state.tripType === "returntrip") {
+        if (this.props.tripType === "returntrip") {
             const flights = await dataFacade.getReturnRoutes(departure, destination, date1, date2)
-            this.setState({ flights: flights, resultsMounted: false, searched: false })
+            this.setState({ searched: false });
+            this.props.setResultsMounted(false);
+            this.props.setFlights(flights);
         }
         else {
             const flights = await dataFacade.getOneWayRoutes(departure, destination, date)
-            this.setState({ flights: flights, resultsMounted: false, searched: false })
+            this.setState({ searched: false })
+            this.props.setResultsMounted(false);
+            this.props.setFlights(flights);
         }
-
     }
+
 
     returnTrip() {
         return (
@@ -148,7 +147,7 @@ export default class SearchParameter extends Component {
         );
     }
 
-    render() {
+    render = () => {
         return (
             <View>
                 <View style={styles.buttonContainer}>
@@ -164,10 +163,22 @@ export default class SearchParameter extends Component {
                     </TouchableHighlight>
                 </View>
                 {
-                    (this.props.state.tripType === "returntrip") ? this.returnTrip() : this.oneWayTrip()
+                    (this.props.tripType === "returntrip") ? this.returnTrip() : this.oneWayTrip()
                 }
                 {
-                    (this.state.resultsMounted) ? (this.state.searched) ? <Text>Loading...</Text> : <Text> </Text> : <FlightList state={this.props.state} onDataChanged={this.props.onDataChanged} flights={this.state.flights} tripType={this.state.tripType} passengers={this.props.state.passengers} />
+                    (this.props.resultsMounted) ? (this.state.searched) ? 
+                    <Text style={{color: "white"}} >Loading...</Text> : 
+                    <Text> </Text> : 
+                    <Result 
+                    state={this.props.state} 
+                    onDataChanged={this.props.onDataChanged} 
+                    flights={this.props.flights} 
+                    changeFlights={this.props.changeFlights} 
+                    changeSortedFlights={this.props.changeSortedFlights} 
+                    tripType={this.props.tripType} 
+                    compareBy={this.props.compareBy} 
+                    orderBy={this.props.orderBy}
+                    passengers={this.props.state.passengers} />
                 }
             </View>
         )

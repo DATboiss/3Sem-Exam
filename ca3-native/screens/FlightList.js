@@ -42,8 +42,9 @@ export default class Flights extends Component {
     }
   }
 
-  displayFlights() {
+  displayFlights(compareBy) {
     const flights = this.props.flights
+    .sort((cur, next) => this.props.compare(cur[compareBy], next[compareBy], this.props.orderBy))
       .slice(0, this.state.listMaxIndex)
       .map((flight, i) => (
         //If it's a return flight
@@ -95,13 +96,13 @@ export default class Flights extends Component {
     return flights;
   }
 
-  render() {
+  render = () => {
     return (
-      <View>
+      <View >
         {
-          (this.props.flights.length > 0) ? this.displayFlights()
+          (this.props.flights.length > 0) ? this.displayFlights(this.props.compareBy)
             :
-            (this.props.state.loading) ? <Text>Loading...</Text> : <Text>No flights found matching your criteria</Text>
+            (this.props.state.loading) ? <Text>Loading...</Text> : <Text style={{color: "white"}}>No flights found matching your criteria</Text>
         }
         {(this.state.listMaxIndex < this.props.flights.length) ?
           <TouchableHighlight style={styles.button} onPress={this.findNextItems} underlayColor="white">

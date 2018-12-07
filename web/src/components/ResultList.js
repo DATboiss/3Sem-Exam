@@ -40,8 +40,8 @@ export default class ResultList extends Component {
 
     displayFlights(compareBy) {
         const flights = this.props.flights
-            // .sort((cur, next) => this.props.compare(cur[compareBy], next[compareBy], this.props.state.orderBy))
-            // .slice(0, this.state.listMaxIndex)
+            .sort((cur, next) => this.props.compare(cur[compareBy], next[compareBy], this.props.state.orderBy))
+            .slice(0, this.state.listMaxIndex)
             .map((flight, i) => (
                 //If it's a return flight
                 (flight.airline1) ?
