@@ -50,6 +50,7 @@ export default class ResultList extends Component {
               <div className="card-title">{`${flight.departure1} → ${flight.destination1} | ${flight.departure2} → ${flight.destination2}`}</div>
             </div>
 
+<<<<<<< HEAD
             <div className="card-body">
               <div className="columns col-gapless">
                 <div className="column col-9 col-xs-12 col-sm-12">
@@ -97,6 +98,34 @@ export default class ResultList extends Component {
                     <div className="column col-12 col-xs-6 col-sm-8 is-action">
                       <div className="dropdown is-wide">
                         <div className="btn-group btn-group-block"><a className="btn btn-success" href="https://www.emilvh.dk/DATWaysDummyPage/">View deal</a><a className="btn btn-success dropdown-toggle" tabIndex="0" href="https://www.emilvh.dk/DATWaysDummyPage/"><i className="icon icon-caret"></i></a>
+=======
+    displayFlights(compareBy) {
+        const flights = this.props.flights
+            .sort((cur, next) => this.props.compare(cur[compareBy], next[compareBy], this.props.state.orderBy))
+            .slice(0, this.state.listMaxIndex)
+            .map((flight, i) => (
+                //If it's a return flight
+                (flight.airline1) ?
+                    <div id="result" key={i}>
+                        <div id="takeoff">
+                            <p>DEPARTURE FLIGHT</p>
+                            {this.showFlightTimesReturn(flight)[0]}
+                            <p>
+                                {flight.airline1 + "  "}
+                                {`${flight.departure1} - ${flight.destination1}`}
+                            </p>
+                        </div>
+                        <div id="landing">
+                            <p>RETURN FLIGHT</p>
+                            {this.showFlightTimesReturn(flight)[1]}
+                            <p>
+                                {flight.airline2 + "  "}
+                                {`${flight.departure2} - ${flight.destination2}`}
+                            </p>
+                        </div>
+                        <div id="price">
+                            {`Price: ${flight.totalPrice}`}
+>>>>>>> react_native
                         </div>
                       </div>
                     </div>
